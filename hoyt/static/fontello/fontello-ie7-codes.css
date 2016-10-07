@@ -1,0 +1,2 @@
+
+.icon-institution { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf19c;&nbsp;'); }

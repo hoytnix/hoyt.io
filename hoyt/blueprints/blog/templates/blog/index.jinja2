@@ -1,0 +1,23 @@
+{% extends 'layouts/skeleton.jinja2' %}
+
+{% set title = "Blog" %}
+{% block meta_description %}{% endblock %}
+
+{% block tracking %}{{ tracking.log(route="home", slug="None")|safe }}{% endblock %}
+
+{% block body %}
+    <h1>Blog</h1>
+
+    {% for post in posts %}
+        <div class="post-preview">
+            <div class="page-header">
+                <h2>{{ post }} <small>{{ post.category.href }}</small></h2>
+            </div>
+            <p>{{ post.preview_text|markdown }}</p>
+
+            <div class="post-preview-all-link">
+                <a class="btn btn-primary" href="{{ url_for('blog.post_detail', category_slug=post.category.slug, post_slug=post.slug) }}">Read more!</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

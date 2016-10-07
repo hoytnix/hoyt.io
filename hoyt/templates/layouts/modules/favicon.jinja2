@@ -1,0 +1,9 @@
+{% if config['DEBUG'] %}
+    <link rel="icon" href="/static/images/favicon_debug.ico" sizes="16x16">
+{% else %}
+    {% if config['ENV'] == 'staging' %}
+        <link rel="icon" href="/static/images/favicon_staging.ico" sizes="16x16">
+    {% elif config['ENV'] == 'publish' or config['ENV'] == 'testing' %}
+        <link rel="icon" href="/static/images/favicon.ico" sizes="16x16">
+    {% endif %}
+{% endif %}

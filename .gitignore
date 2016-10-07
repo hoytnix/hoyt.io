@@ -1,0 +1,29 @@
+# In the spirit of adhering to the principle of "committing everything necessary
+# to compile a build to conversion control, but not the build results"
+# each 'thing' will look like this:
+#
+# # Title
+# thing-to-ignore
+# possible-other-thing-to-ignore
+# !what-causes-thing-to-compile
+
+# Python files
+*.pyc
+*__pycache__/
+!*.py
+
+# Python packages
+*.egg-info/
+!setup.py
+
+# Node packages
+node_modules/
+!package.json
+
+# Final static output
+public/
+# built with 'hoyt build publish'
+
+# Alembic migrations
+# an exception to the rules because a missing file causes errors
+!*migrations/version/
