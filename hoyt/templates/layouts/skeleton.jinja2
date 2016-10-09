@@ -1,4 +1,3 @@
-{% import 'macros/tracking.jinja2' as tracking %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,10 +20,9 @@
             <div class="md-margin-top">{% block heading %}{% endblock %}</div>
             {% block body %}{% endblock %}
 
-            {% include 'layouts/modules/comments.jinja2' %}
+            {% block comments %}{% endblock %}
         </main>
 
         {% include 'layouts/modules/footer.jinja2' %}
-        </div>
     </body>
 </html>

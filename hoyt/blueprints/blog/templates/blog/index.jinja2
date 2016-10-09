@@ -3,15 +3,13 @@
 {% set title = "Blog" %}
 {% block meta_description %}{% endblock %}
 
-{% block tracking %}{{ tracking.log(route="home", slug="None")|safe }}{% endblock %}
-
 {% block body %}
     <h1>Blog</h1>
 
     {% for post in posts %}
         <div class="post-preview">
             <div class="page-header">
-                <h2>{{ post }} <small>{{ post.category.href }}</small></h2>
+                <h2>{{ post.title }} <small>{{ post.category.href }}</small></h2>
             </div>
             <p>{{ post.preview_text|markdown }}</p>
 

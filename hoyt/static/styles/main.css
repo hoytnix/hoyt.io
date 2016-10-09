@@ -42,6 +42,37 @@ body {
     padding-top: 20px;
 }
 
+/* Blog - post navigation
+-------------------------------------------------- */
+
+.post-navigation {
+    padding: 20px 0px 40px 0px;
+}
+
+.post-nav-list {
+    list-style: none;
+    padding-left: 0px;
+
+    max-width: 720px;
+}
+
+.post-nav-item {
+    float: left;
+    width: 50%;
+    min-height: 1px;
+}
+
+.post-nav-item > strong {
+    font-weight: normal;
+    font-size: 90%;
+}
+
+.post-nav-item > a {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Banner - page cover
 -------------------------------------------------- */
 

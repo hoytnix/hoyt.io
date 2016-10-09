@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, url_for, request
 
 from .models import Post, Category
 
@@ -9,7 +9,7 @@ blog = Blueprint('blog', __name__, template_folder='templates', url_prefix='/blo
 def index():
     o = {
         'categories': Category.query.all(),
-        'posts': Post.query.limit(10)
+        'posts': Post.query.order_by(Post.updated_on.desc()).limit(10)
     }
     return render_template('blog/index.jinja2', **o)
 
