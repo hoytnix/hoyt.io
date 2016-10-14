@@ -27,3 +27,8 @@ public/
 # Alembic migrations
 # an exception to the rules because a missing file causes errors
 !*migrations/version/
+
+# Fontello
+hoyt/static/font
+hoyt/static/fontello
+!fontello.json

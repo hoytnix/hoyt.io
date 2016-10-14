@@ -1,4 +1,5 @@
 {% extends 'layouts/skeleton.jinja2' %}
+{% from 'blog/macros.jinja2' import post_preview %}
 
 {% set title = "Blog" %}
 {% block meta_description %}{% endblock %}
@@ -7,15 +8,6 @@
     <h1>Blog</h1>
 
     {% for post in posts %}
-        <div class="post-preview">
-            <div class="page-header">
-                <h2>{{ post.title }} <small>{{ post.category.href }}</small></h2>
-            </div>
-            <p>{{ post.preview_text|markdown }}</p>
-
-            <div class="post-preview-all-link">
-                <a class="btn btn-primary" href="{{ url_for('blog.post_detail', category_slug=post.category.slug, post_slug=post.slug) }}">Read more!</a>
-            </div>
-        </div>
+        {{ post_preview(post) }}
     {% endfor %}
 {% endblock %}

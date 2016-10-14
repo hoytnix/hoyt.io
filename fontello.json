@@ -1,5 +1,5 @@
 {
-	"name": "117698ecdd1a284ded7c8fa082fd7405",
+	"name": "78c34f8c58a76fc4a7898b4e46a5cea7",
 	"css_prefix_text": "icon-",
 	"css_use_suffix": false,
 	"hinting": true,
@@ -16,6 +16,24 @@
 			"uid": "0f6a2573a7b6df911ed199bb63717e27",
 			"css": "github-circled",
 			"code": 61595,
+			"src": "fontawesome"
+		},
+		{
+			"uid": "9755f76110ae4d12ac5f9466c9152031",
+			"css": "book",
+			"code": 59393,
+			"src": "fontawesome"
+		},
+		{
+			"uid": "bc9b0a766409e4ddeb2e9745c3e8130c",
+			"css": "hourglass",
+			"code": 62036,
+			"src": "fontawesome"
+		},
+		{
+			"uid": "a3f89e106175a5c5c4e9738870b12e55",
+			"css": "tags",
+			"code": 59394,
 			"src": "fontawesome"
 		}
 	]

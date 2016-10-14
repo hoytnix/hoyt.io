@@ -1,10 +1,11 @@
 {% extends 'layouts/skeleton.jinja2' %}
+{% from 'blog/macros.jinja2' import post_header %}
 
 {% set title = post.title %}
 {% block meta_description %}{% endblock %}
 
 {% block body %}
-    <h1>{{ post.title }}</h1>
+    {{ post_header(post) }}
     <ol class="breadcrumb">
         <li><a href="{{ url_for('blog.index') }}">Blog</a></li>
         <li>{{ post.category.href }}</li>

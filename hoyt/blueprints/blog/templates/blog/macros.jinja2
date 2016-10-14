@@ -1,0 +1,22 @@
+{% macro post_header(post, heading=1) -%}
+<div class="page-header">
+    <h{{ heading }}>{{ post.title }}</h{{ heading }}>
+    <div class="post-meta-details">
+        <i class="fa fa-fw icon-hourglass"></i> <script>document.write(moment("{{ post.updated_on }}").format('MMM Do YYYY'));</script>
+        <i class="fa fa-fw icon-book"></i> {{ post.category.href }}
+        <!-- <i class="fa fa-fw icon-tags"></i> -->
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro post_preview(post) -%}
+<div class="post-preview">
+    {{ post_header(post, heading=2) }}
+
+    {{ post.preview_text|markdown }}
+
+    <div class="post-preview-all-link">
+        <a class="btn btn-primary" href="{{ post.url_for }}">Read more!</a>
+    </div>
+</div>
+{%- endmacro %}
