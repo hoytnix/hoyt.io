@@ -1,7 +1,4 @@
-<!-- First load the script, then the stylesheet so that the custom style
-    overrides the style imported by the script.
--->
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/vendor/github-prettify-theme.css') }}">
+<script src="{{ url_for('static', filename='scripts/vendor/highlight.js') }}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 <script src="{{ url_for('static', filename='scripts/vendor/moment.js') }}"></script>

@@ -125,5 +125,5 @@ module.exports = (grunt) ->
 
         # Finally hash assets and minify the HTML
         "cacheBust"
-        #"htmlmin"
+        "htmlmin"
     ]
