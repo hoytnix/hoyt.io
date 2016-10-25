@@ -1,5 +1,4 @@
 # Linters
-pep8
 pep257
 pylint
 
