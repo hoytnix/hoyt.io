@@ -36,6 +36,6 @@ flask-debugtoolbar==0.10.0
 Flask-Mail==0.9.1
 Flask-Login==0.3.2
 Flask-Limiter==0.9.3
-Flask-Babel==0.9
+Flask-Babel==0.11.1
 Flask-Admin==1.4.2
 Flask-Misaka==0.4.1
