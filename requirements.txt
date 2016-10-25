@@ -22,7 +22,7 @@ celery==3.1.24
 
 # Forms.
 Flask-WTF==0.9.5
-WTForms-Components==0.9.7
+WTForms-Components==0.10.0
 
 # Payments.
 stripe==1.32.0
