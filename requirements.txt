@@ -29,7 +29,7 @@ stripe==1.32.0
 
 # Utils.
 fake-factory==0.5.7
-unidecode
+unidecode==0.04.19
 
 # Extensions.
 flask-debugtoolbar==0.10.0
