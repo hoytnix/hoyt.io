@@ -32,3 +32,17 @@ public/
 hoyt/static/font
 hoyt/static/fontello
 !fontello.json
+
+# Temporary virtual environment files
+.cache
+/env
+
+# Testing and coverage results
+.cache
+.pytest
+.coverage
+.coverage.*
+/htmlcov
+/xmlreport
+/pyunit.xml
+*.tmp
