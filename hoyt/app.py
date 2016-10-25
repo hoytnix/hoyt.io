@@ -8,7 +8,7 @@ from lib.dates import current_year
 from lib.imports import all_blueprints, all_models
 
 
-def create_app(environment='develop'):
+def create_app(environment='develop', settings_override=None):
     app = Flask(__name__)
 
     # Configuration -----------------------------------------------------------
@@ -31,6 +31,9 @@ def create_app(environment='develop'):
             if environment in config_file:
                 break    # only go as deep as the runtime
     app.config['ENV'] = environment
+
+    if settings_override:
+        app.config.update(settings_override)
 
     # Blueprints --------------------------------------------------------------
     for blueprint in all_blueprints():
@@ -58,7 +61,6 @@ def extensions(app):
 
 
 def template_processors(app):
-    app.jinja_env.add_extension('hamlish_jinja.HamlishExtension')
     app.jinja_env.globals.update(current_year=current_year)
 
     return app.jinja_env

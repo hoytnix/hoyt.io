@@ -9,6 +9,7 @@ pygments
 # Tooling
 yapf
 sniffer >= 0.3.6
+mock
 
 # Runner
 honcho
