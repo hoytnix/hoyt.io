@@ -7,11 +7,10 @@ blog = Blueprint('blog', __name__, template_folder='templates', url_prefix='/blo
 
 @blog.route('/')
 def index():
-    o = {
-        'categories': Category.query.all(),
-        'posts': Post.query.order_by(Post.updated_on.desc()).limit(10)
-    }
-    return render_template('blog/index.jinja2', **o)
+    categories = Category.query.all()
+    posts = Post.query.filter_by(is_published=True) \
+                    .order_by(Post.updated_on.desc()).limit(10)
+    return render_template('blog/index.jinja2', categories=categories, posts=posts)
 
 
 @blog.route('/<slug>/')

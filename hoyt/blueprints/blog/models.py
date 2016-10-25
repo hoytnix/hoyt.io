@@ -20,6 +20,7 @@ class Post(ResourceMixin, db.Model):
     # Details
     title = db.Column(db.String(128))
     comments_enabled = db.Column(db.Boolean, default=True)
+    is_published = db.Column(db.Boolean, default=False)
     preview_paragraphs = db.Column(db.Integer, default=2)
     file_hash = db.Column(db.String(128))
 
@@ -121,6 +122,7 @@ class Category(db.Model):
     @property
     def most_recent_posts(self):
         return Post.query.filter_by(category_id=self.id) \
+                        .filter_by(is_published=True) \
                         .order_by(Post.updated_on.desc()).all()
 
     @property

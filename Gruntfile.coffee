@@ -103,15 +103,19 @@ module.exports = (grunt) ->
                     scss: false
                     force: true
 
+    # Minification / compression.
     grunt.loadNpmTasks "grunt-contrib-uglify"
     grunt.loadNpmTasks "grunt-contrib-cssmin"
     grunt.loadNpmTasks "grunt-contrib-htmlmin"
     grunt.loadNpmTasks "grunt-contrib-imagemin"
-    grunt.loadNpmTasks "grunt-newer"
+    # ...
     grunt.loadNpmTasks "grunt-uncss"
     grunt.loadNpmTasks "grunt-cache-bust"
-    grunt.loadNpmTasks "grunt-contrib-copy"
     grunt.loadNpmTasks "grunt-fontello"
+    # Utilities
+    grunt.loadNpmTasks "grunt-contrib-copy"
+    grunt.loadNpmTasks "grunt-contrib-watch"
+    grunt.loadNpmTasks "grunt-newer"
 
     grunt.registerTask "default", [
         # First collect CSS
