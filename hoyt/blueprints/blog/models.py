@@ -73,7 +73,7 @@ class Post(ResourceMixin, db.Model):
                 text = stream.read()
 
         h = hashlib.new('sha512')
-        h.update(text.encode('utf-8',errors='ignore'))
+        h.update(text.encode('utf-8', errors='ignore'))
         hash_sum = h.hexdigest()
 
         if hash_sum != self.file_hash:
@@ -101,8 +101,8 @@ class Post(ResourceMixin, db.Model):
 
     @property
     def url_for(self):
-        return url_for('blog.post_detail', category_slug=self.category.slug,
-                                            post_slug=self.slug)
+        return url_for(
+            'blog.post_detail', category_slug=self.category.slug, post_slug=self.slug)
 
     @property
     def slug(self):

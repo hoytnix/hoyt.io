@@ -4,8 +4,6 @@ from alembic import op
 
 #from lib.util_datetime import tzware_datetime
 #from lib.util_sqlalchemy import AwareDateTime
-
-
 """
 x
 

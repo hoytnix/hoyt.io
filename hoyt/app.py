@@ -29,7 +29,7 @@ def create_app(environment='develop'):
 
         if environment:
             if environment in config_file:
-                break # only go as deep as the runtime
+                break    # only go as deep as the runtime
     app.config['ENV'] = environment
 
     # Blueprints --------------------------------------------------------------

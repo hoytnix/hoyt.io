@@ -4,6 +4,7 @@ from lib.tests import ViewTestMixin, assert_status_with_message
 
 
 class TestPage(ViewTestMixin):
+
     def test_home_page(self):
         """ Home page should respond with a success 200. """
         response = self.client.get(url_for('page.index'))

@@ -12,7 +12,6 @@ from hoyt.extensions import db
 
 app = create_app()
 
-
 # Include the project's folder on the system path.
 sys.path.append(os.getcwd())
 
@@ -40,8 +39,10 @@ def run_migrations_offline():
 
     Calls to context.execute() here emit the given string to the script output.
     """
-    context.configure(url=app.config['SQLALCHEMY_DATABASE_URI'],
-                      target_metadata=target_metadata, literal_binds=True)
+    context.configure(
+        url=app.config['SQLALCHEMY_DATABASE_URI'],
+        target_metadata=target_metadata,
+        literal_binds=True)
 
     with context.begin_transaction():
         context.run_migrations()
@@ -60,7 +61,8 @@ def run_migrations_online():
     with engine.connect() as connection:
         context.configure(
             url=app.config['SQLALCHEMY_DATABASE_URI'],
-            connection=connection, target_metadata=target_metadata)
+            connection=connection,
+            target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
