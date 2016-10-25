@@ -38,4 +38,4 @@ Flask-Login==0.3.2
 Flask-Limiter==0.9.3
 Flask-Babel==0.9
 Flask-Admin==1.4.2
-Flask-Misaka
+Flask-Misaka==0.4.1
