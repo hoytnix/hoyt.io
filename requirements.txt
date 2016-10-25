@@ -28,7 +28,7 @@ WTForms-Components==0.10.0
 stripe==1.41.0
 
 # Utils.
-fake-factory==0.5.7
+fake-factory==0.7.2
 unidecode==0.04.19
 
 # Extensions.
