@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, url_for, request
+from flask import Blueprint, render_template, abort
 
 from .models import Post, Category
 
@@ -40,6 +40,9 @@ def post_detail(category_slug, post_slug):
             break
 
     if not result:
+        abort(404)
+
+    if result.category.slug != category_slug:
         abort(404)
 
     return render_template('blog/post_detail.jinja2', post=result)

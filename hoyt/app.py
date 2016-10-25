@@ -19,7 +19,7 @@ def create_app(environment='develop'):
     config_dir = path.join(cwd, 'config')
 
     config_files = []
-    for (root, dir_names, file_names) in walk(config_dir):
+    for (root, _, file_names) in walk(config_dir):
         for file_name in file_names:
             config_files.append(path.join(root, file_name))
     config_files = sorted(config_files)

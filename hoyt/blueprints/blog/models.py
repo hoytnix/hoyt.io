@@ -3,11 +3,11 @@ import datetime
 import hashlib
 
 import pytz
-from flask import Markup, url_for
+from flask import url_for
 
 from hoyt.extensions import db
 from lib.slugs import slugify
-from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
+from lib.util_sqlalchemy import ResourceMixin
 
 
 class Post(ResourceMixin, db.Model):
