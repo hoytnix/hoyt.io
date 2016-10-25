@@ -37,5 +37,5 @@ Flask-Mail==0.9.1
 Flask-Login==0.3.2
 Flask-Limiter==0.9.3
 Flask-Babel==0.9
-Flask-Admin
+Flask-Admin==1.4.2
 Flask-Misaka
