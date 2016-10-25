@@ -1,12 +1,6 @@
-import datetime
-import json
-
 import pytest
-import pytz
-from mock import Mock
 
 from hoyt.app import create_app
-from lib.util_datetime import timedelta_months
 from hoyt.extensions import db as _db
 
 
@@ -38,7 +32,7 @@ def app():
 
 
 @pytest.yield_fixture(scope='function')
-def client(app):
+def client(app):    # pylint: disable=redefined-outer-name
     """
     Setup an app client, this gets executed for each test function.
 
@@ -49,7 +43,7 @@ def client(app):
 
 
 @pytest.fixture(scope='session')
-def db(app):
+def db(app):    # pylint: disable=redefined-outer-name, unused-argument
     """
     Setup our database, this only gets executed once per session.
 
@@ -63,10 +57,11 @@ def db(app):
 
 
 @pytest.yield_fixture(scope='function')
-def session(db):
+def session(db):    # pylint: disable=redefined-outer-name
     """
-    Allow very fast tests by using rollbacks and nested sessions. This does
-    require that your database supports SQL savepoints, and Postgres does.
+    Allow very fast tests by using rollbacks and nested sessions.
+
+    This does require that your database supports SQL savepoints, and Postgres does.
 
     Read more about this at:
     http://stackoverflow.com/a/26624146

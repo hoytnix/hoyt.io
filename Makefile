@@ -67,6 +67,7 @@ PIP := $(BIN_)pip
 EASY_INSTALL := $(BIN_)easy_install
 SNIFFER := $(BIN_)sniffer
 HONCHO := $(ACTIVATE) && $(BIN_)honcho
+YAPF := $(BIN_)yapf
 
 # MAIN TASKS ###################################################################
 
@@ -140,6 +141,10 @@ pep257: install ## Check for docstring issues
 .PHONY: pylint
 pylint: install ## Check for code issues
 	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
+
+.PHONY: format
+format: install ## Autoformat code
+	$(YAPF) -ri $(PACKAGE)/
 
 # TESTS ########################################################################
 

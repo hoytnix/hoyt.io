@@ -32,6 +32,7 @@ def read_package_variable(key):
 def read_descriptions():
     """Build a description for the project from documentation files."""
     return ''    # todo: include readme and changelog
+    # pylint: disable=unreachable
     try:
         readme = open("README.rst").read()
         changelog = open("CHANGELOG.rst").read()
