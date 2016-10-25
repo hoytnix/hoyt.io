@@ -18,7 +18,7 @@ psycopg2==2.6.1
 Flask-SQLAlchemy==2.1
 alembic==0.8.8
 redis==2.10.5
-celery==3.1.23
+celery==3.1.24
 
 # Forms.
 Flask-WTF==0.9.5
