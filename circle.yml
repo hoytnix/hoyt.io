@@ -5,8 +5,6 @@ machine:
     RANDOM_SEED: 0
 
 dependencies:
-  pre:
-    - make doctor || echo "Some system dependencies might be missing"
   override:
     - make install
   cache_directories:
@@ -16,5 +14,3 @@ dependencies:
 test:
   override:
     - make check
-    - make test-unit REPORTS=${CIRCLE_TEST_REPORTS}
-    - make test-int REPORTS=${CIRCLE_TEST_REPORTS}
