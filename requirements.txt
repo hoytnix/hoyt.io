@@ -25,7 +25,7 @@ Flask-WTF==0.9.5
 WTForms-Components==0.10.0
 
 # Payments.
-stripe==1.32.0
+stripe==1.41.0
 
 # Utils.
 fake-factory==0.5.7
