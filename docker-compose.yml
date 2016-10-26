@@ -3,12 +3,13 @@ version: '2'
 services:
   postgres:
     image: 'postgres:9.5'
-    env_file:
-      - '.env'
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
+    environment:
+      - POSTGRES_USER = me
+      - POSTGRES_PASSWORD = pass
 
 volumes:
   postgres:
