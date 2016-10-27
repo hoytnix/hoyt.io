@@ -11,7 +11,8 @@
 
         {% include 'layouts/modules/favicon.jinja2' %}
         {% include 'layouts/modules/css.jinja2' %}
-        {% include 'layouts/modules/scripts.jinja2' %}
+        
+        <script src="{{ url_for('static', filename='scripts/vendor/moment.js') }}"></script>
     </head>
     <body>
         {% include 'layouts/modules/header.jinja2' %}
@@ -24,5 +25,7 @@
         </main>
 
         {% include 'layouts/modules/footer.jinja2' %}
+        {% include 'layouts/modules/scripts.jinja2' %}
+        {% include 'layouts/modules/analytics.jinja2' %}
     </body>
 </html>
