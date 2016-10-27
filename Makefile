@@ -85,6 +85,10 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 run: install
 	$(PYTHON) $(PACKAGE)/__main__.py
 
+.PHONY: run_db ## Start the database
+run_db:
+	cd database && docker-compose up --build
+
 # SYSTEM DEPENDENCIES ##########################################################
 
 .PHONY: doctor
