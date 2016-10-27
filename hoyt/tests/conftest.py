@@ -11,7 +11,7 @@ def app():
 
     :return: Flask app
     """
-    db_uri = '{0}_test'.format('postgresql://me:pass@postgres:5432/hoyt')
+    db_uri = 'postgresql://postgres@postgres:5432/test_hoyt'
     params = {
         'DEBUG': False,
         'TESTING': True,
