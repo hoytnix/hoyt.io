@@ -16,13 +16,13 @@ def settings(environment=None):
             config_files.append(path.join(root, file_name))
     config_files = sorted(config_files)
 
-    settings = {}
+    store = {}
     for config_file in config_files:
         config = anyconfig.load(config_file)
         for key in config:
-            settings[key] = config[key]
+            store[key] = config[key]
 
         if environment in config_file:
             break
 
-    return settings
+    return store
