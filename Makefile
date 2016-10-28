@@ -10,10 +10,10 @@
 
 # Project settings
 PROJECT := Hoyt.IO
-PACKAGE := hoyt
+PACKAGE := flask/hoyt
 REPOSITORY := hoytnix/hoyt.io
-PACKAGES := $(PACKAGE) tests
-CONFIG := $(shell ls *.py)
+PACKAGES := $(PACKAGE) flask/tests
+CONFIG := $(shell ls flask/*.py)
 MODULES := $(shell find $(PACKAGES) -name '*.py') $(CONFIG)
 
 # Python settings
@@ -43,7 +43,8 @@ else
 endif
 
 # Virtual environment paths
-ENV := env
+REALPATH := $(shell realpath .)
+ENV := $(REALPATH)/env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	ACTIVATE := $(BIN)/activate.bat
@@ -85,7 +86,7 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run ## Start the program
 run: install
-	$(HOYT) run
+	cd flask && $(HOYT) run
 
 .PHONY: run_db ## Start the database
 run_db:
@@ -93,15 +94,16 @@ run_db:
 
 .PHONY: serve
 serve:
-	$(HOYT) build publish -e publish
+	@ echo "Nothing will happen if localhost:5000 isn't available."
+	@ grep -q '200 OK' <<< $$(curl -Is http://localhost:5000 | head -1)
+	cd flask && $(HOYT) freeze -e publish
 	cd static-server && grunt
 	xdg-open "http://localhost:5001"
 	cd static-server && firebase serve
 
 .PHONY: deploy
 deploy:
-	cd static-server &&
-	firebase deploy
+	cd static-server && firebase deploy
 
 # SYSTEM DEPENDENCIES ##########################################################
 
@@ -118,11 +120,11 @@ DEPS_BASE := $(ENV)/.install-base
 .PHONY: install
 install: $(DEPS_CI) $(DEPS_DEV) $(DEPS_BASE) ## Install all project dependencies
 
-$(DEPS_CI): requirements-ci.txt $(PIP)
+$(DEPS_CI): flask/requirements-ci.txt $(PIP)
 	$(PIP) install --upgrade -r $<
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPS_DEV): requirements-dev.txt $(PIP)
+$(DEPS_DEV): flask/requirements-dev.txt $(PIP)
 	$(PIP) install --upgrade -r $<
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
@@ -133,8 +135,8 @@ else ifdef LINUX
 endif
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPS_BASE): setup.py requirements.txt $(PYTHON)
-	$(PYTHON) setup.py develop
+$(DEPS_BASE): flask/setup.py flask/requirements.txt $(PYTHON)
+	$(PIP) install -e flask/
 	@ touch $@  # flag to indicate dependencies are installed
 
 $(PIP): $(PYTHON)
@@ -158,11 +160,11 @@ pep257: install ## Check for docstring issues
 
 .PHONY: pylint
 pylint: install ## Check for code issues
-	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
+	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=flask/.pylintrc
 
 .PHONY: format
 format: install ## Autoformat code
-	$(YAPF) -ri $(PACKAGE)/
+	$(YAPF) -ri flask/
 
 # TESTS ########################################################################
 
@@ -246,61 +248,6 @@ $(MKDOCS_INDEX): mkdocs.yml docs/*.md
 mkdocs-live: mkdocs ## Launch and continuously rebuild the mkdocs site
 	eval "sleep 3; open http://127.0.0.1:8000" &
 	$(MKDOCS) serve
-
-# BUILD ########################################################################
-
-PYINSTALLER := $(BIN_)pyinstaller
-PYINSTALLER_MAKESPEC := $(BIN_)pyi-makespec
-
-DIST_FILES := dist/*.tar.gz dist/*.whl
-EXE_FILES := dist/$(PROJECT).*
-
-.PHONY: dist
-dist: install $(DIST_FILES)
-$(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
-	rm -f $(DIST_FILES)
-	$(PYTHON) setup.py check --restructuredtext --strict --metadata
-	$(PYTHON) setup.py sdist
-	$(PYTHON) setup.py bdist_wheel
-
-%.rst: %.md
-	pandoc -f markdown_github -t rst -o $@ $<
-
-.PHONY: exe
-exe: install $(EXE_FILES)
-$(EXE_FILES): $(MODULES) $(PROJECT).spec
-	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
-	$(PYINSTALLER) $(PROJECT).spec --noconfirm --clean
-
-$(PROJECT).spec:
-	$(PYINSTALLER_MAKESPEC) $(PACKAGE)/__main__.py --onefile --windowed --name=$(PROJECT)
-
-# RELEASE ######################################################################
-
-TWINE := $(BIN_)twine
-
-.PHONY: register
-register: dist ## Register the project on PyPI
-	@ echo NOTE: your project must be registered manually
-	@ echo https://github.com/pypa/python-packaging-user-guide/issues/263
-	# TODO: switch to twine when the above issue is resolved
-	# $(TWINE) register dist/*.whl
-
-.PHONY: upload
-upload: .git-no-changes register ## Upload the current version to PyPI
-	$(TWINE) upload dist/*
-	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
-
-.PHONY: .git-no-changes
-.git-no-changes:
-	@ if git diff --name-only --exit-code;        \
-	then                                          \
-		echo Git working copy is clean...;        \
-	else                                          \
-		echo ERROR: Git working copy is dirty!;   \
-		echo Commit your changes and try again.;  \
-		exit -1;                                  \
-	fi;
 
 # CLEANUP ######################################################################
 
