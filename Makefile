@@ -65,6 +65,8 @@ endif
 PYTHON := $(BIN_)python
 PIP := $(BIN_)pip
 EASY_INSTALL := $(BIN_)easy_install
+HOYT := $(BIN_)hoyt
+
 SNIFFER := $(BIN_)sniffer
 HONCHO := $(ACTIVATE) && $(BIN_)honcho
 YAPF := $(BIN_)yapf
@@ -83,11 +85,23 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run ## Start the program
 run: install
-	$(PYTHON) $(PACKAGE)/__main__.py
+	$(HOYT) run
 
 .PHONY: run_db ## Start the database
 run_db:
 	cd database && docker-compose up --build
+
+.PHONY: serve
+serve:
+	$(HOYT) build publish -e publish
+	cd static-server && grunt
+	xdg-open "http://localhost:5001"
+	cd static-server && firebase serve
+
+.PHONY: deploy
+deploy:
+	cd static-server &&
+	firebase deploy
 
 # SYSTEM DEPENDENCIES ##########################################################
 

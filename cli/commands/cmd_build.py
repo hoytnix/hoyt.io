@@ -15,7 +15,6 @@ def cli():
 @click.option('--environment', '-e', default=None)
 def publish(environment):
     freeze_app(environment=environment)
-    minify_assets()
 
 @click.command()
 @click.option('--environment', '-e', default=None)
