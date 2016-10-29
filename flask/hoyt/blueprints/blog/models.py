@@ -127,6 +127,9 @@ class Post(ResourceMixin, db.Model):
     def slug(self):
         return slugify(self.title)
 
+    def __str__(self):
+        return self.title
+
 
 class Category(db.Model):
     __tablename__ = 'categories'  # plural lower-case
@@ -156,5 +159,5 @@ class Category(db.Model):
     def slug(self):
         return slugify(self.title)
 
-    def __repr__(self):
+    def __str__(self):
         return self.title
