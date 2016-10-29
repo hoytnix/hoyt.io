@@ -1,48 +1,30 @@
-# In the spirit of adhering to the principle of "committing everything necessary
-# to compile a build to conversion control, but not the build results"
-# each 'thing' will look like this:
 #
-# # Title
-# thing-to-ignore
-# possible-other-thing-to-ignore
-# !what-causes-thing-to-compile
+# flask
+#
 
-# Python files
-*.pyc
-*__pycache__/
-!*.py
-
-# Python packages
+__pycache__/
+*.py[cod]
 *.egg-info/
-!setup.py
 
-# Node packages
-node_modules/
-!package.json
+#
+# static server
+#
 
-# Final static output
-public/
-# built with 'hoyt build publish'
-
-# Alembic migrations
-# an exception to the rules because a missing file causes errors
-!*migrations/version/
-
-# Fontello
+static-server/node_modules/
+static-server/public/
 hoyt/static/font
 hoyt/static/fontello
-!fontello.json
 
-# Temporary virtual environment files
-.cache
-/env
+#
+# continuous integration
+#
 
-# Testing and coverage results
 .cache
+env/
 .pytest
 .coverage
 .coverage.*
-/htmlcov
-/xmlreport
+htmlcov/
+xmlreport/
 /pyunit.xml
 *.tmp
