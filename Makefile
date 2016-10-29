@@ -92,6 +92,10 @@ run: install
 run_db:
 	cd database && docker-compose up --build
 
+.PHONY: backup_db
+backup_db:
+	pg_dump -h localhost -p 5432 -U postgres -d hoyt -w --data-only --inserts -f database/backup.sql
+
 .PHONY: serve
 serve:
 	@ echo "Nothing will happen if localhost:5000 isn't available."

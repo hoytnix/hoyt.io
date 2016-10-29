@@ -5,8 +5,6 @@
 -- Dumped from database version 9.5.4
 -- Dumped by pg_dump version 9.5.4
 
--- Started on 2016-10-29 06:47:52 EDT
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -18,8 +16,6 @@ SET row_security = off;
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 2113 (class 0 OID 32773)
--- Dependencies: 182
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -28,8 +24,6 @@ INSERT INTO categories VALUES (2, 'Software');
 
 
 --
--- TOC entry 2120 (class 0 OID 0)
--- Dependencies: 181
 -- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -37,8 +31,6 @@ SELECT pg_catalog.setval('categories_id_seq', 2, true);
 
 
 --
--- TOC entry 2115 (class 0 OID 32781)
--- Dependencies: 184
 -- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -48,15 +40,11 @@ INSERT INTO posts VALUES ('2016-10-29 10:42:27.850815+00', '2016-10-29 10:42:30.
 
 
 --
--- TOC entry 2121 (class 0 OID 0)
--- Dependencies: 183
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('posts_id_seq', 3, true);
 
-
--- Completed on 2016-10-29 06:47:52 EDT
 
 --
 -- PostgreSQL database dump complete
