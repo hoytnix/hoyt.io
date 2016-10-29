@@ -8,6 +8,15 @@ from lib.imports import all_blueprints, all_models
 
 
 def create_app(environment=None, settings_override=None):
+    """Create a Flask application using the app factory pattern.
+
+    Args:
+        settings_override (dict): Override settings.
+
+    Returns:
+        app (Flask): Flask application instance
+    """
+
     app = Flask(__name__)
 
     app.config.update(settings(environment))
@@ -25,6 +34,15 @@ def create_app(environment=None, settings_override=None):
 
 
 def extensions(app):
+    """Register extensions.
+
+    Args:
+        app (Flask): Flask application instance
+
+    Returns:
+        None
+    """
+
     # Flask-Sqlalchemy
     db.init_app(app)
 
@@ -41,6 +59,15 @@ def extensions(app):
 
 
 def template_processors(app):
+    """Register template processors.
+
+    Args:
+        app (Flask): Flask application instance
+
+    Returns:
+        app.jinja_env
+    """
+
     app.jinja_env.globals.update(current_year=current_year)
 
     return app.jinja_env

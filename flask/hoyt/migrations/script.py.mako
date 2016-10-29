@@ -1,3 +1,5 @@
+"""${repr(up_revision)} - ${message}"""
+
 import sqlalchemy as sa
 
 from alembic import op
@@ -22,8 +24,12 @@ depends_on = ${repr(depends_on)}
 
 
 def upgrade():
+    """Command to migrate database forward."""
+
     ${upgrades if upgrades else "pass"}
 
 
 def downgrade():
+    """Command to migrate database backwards."""
+
     ${downgrades if downgrades else "pass"}

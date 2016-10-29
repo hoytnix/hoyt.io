@@ -8,6 +8,8 @@ blog = Blueprint(
 
 @blog.route('/')
 def index():
+    """Display the ten most-recent posts."""
+
     categories = Category.query.all()
     posts = Post.query.filter_by(is_published=True) \
                     .order_by(Post.updated_on.desc()).limit(10)
@@ -17,6 +19,12 @@ def index():
 
 @blog.route('/<slug>/')
 def category_detail(slug):
+    """Display everything related to the category.
+
+    Args:
+        slug (str): key to search for category.
+    """
+
     result = None
 
     categories = Category.query.all()
@@ -33,6 +41,13 @@ def category_detail(slug):
 
 @blog.route('/<category_slug>/<post_slug>/')
 def post_detail(category_slug, post_slug):
+    """Display a single post.
+
+    Args:
+        category_slug (str): not required logically, but used for sanity checking.
+        post_slug (str): key to search for post.
+    """
+
     result = None
 
     posts = Post.query.all()
@@ -44,6 +59,7 @@ def post_detail(category_slug, post_slug):
     if not result:
         abort(404)
 
+    # Although this _shouldn't_ do anything, it's here for my sanity. :)
     if result.category.slug != category_slug:
         abort(404)
 

@@ -58,6 +58,18 @@ class Post(ResourceMixin, db.Model):
 
     @property
     def body(self):
+        """TODO: This method is illegal, it is a getter, and also causes effects.
+
+        1. Attempts to read a file of the same name of the post; if it can't it
+        will create one.
+
+        2. Creates a checksum of the file-contents, and if they do not match the
+        one stored in the database it will update it with the current datetime.
+
+        Returns:
+            str: contents of the post-file.
+        """
+
         cd = os.path.dirname(os.path.abspath(__file__))
         posts_dir = os.path.join(cd, 'posts')
 
@@ -85,6 +97,11 @@ class Post(ResourceMixin, db.Model):
 
     @property
     def preview_text(self):
+        """Return so many paragraphs of the body, as specified by `preview_paragraphs`.
+
+        Returns: str
+        """
+
         text = self.body
         if text == '':
             return text

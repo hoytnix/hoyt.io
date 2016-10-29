@@ -164,7 +164,7 @@ pylint: install ## Check for code issues
 
 .PHONY: format
 format: install ## Autoformat code
-	$(YAPF) -ri flask/
+	cd flask && $(YAPF) -ri .
 
 # TESTS ########################################################################
 

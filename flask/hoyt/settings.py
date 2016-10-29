@@ -4,6 +4,18 @@ import anyconfig
 
 
 def settings(environment=None):
+    """Ordered object for configuration.
+
+    Loops through files in the `config`-directory by weight, and breaks after it
+    finishes the file which contains the `environment` key.
+
+    Args:
+        environment (str): they file-key to break at; defaults to `develop`.
+
+    Returns:
+        dict
+    """
+
     if not environment:
         environment = 'develop'
 
