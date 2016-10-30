@@ -1,5 +1,6 @@
 /* Sticky footer styles
 -------------------------------------------------- */
+
 html {
     position: relative;
     min-height: 100%;
@@ -31,6 +32,7 @@ body {
     padding-right: 5px;
 }
 
+
 /* Blog - preview
 -------------------------------------------------- */
 
@@ -41,6 +43,7 @@ body {
 .post-preview-all-link {
     padding-top: 20px;
 }
+
 
 /* Blog - post navigation
 -------------------------------------------------- */
@@ -73,6 +76,13 @@ body {
     text-overflow: ellipsis;
 }
 
+
+/* Blog - Facebook comments
+-------------------------------------------------- */
+
+.fb-comments, .fb-comments iframe[style], .fb-comments span[style] {width: 100% !important;}
+
+
 /* Banner - page cover
 -------------------------------------------------- */
 
@@ -97,6 +107,7 @@ header.banner .title {
     font-size: 3rem;
     white-space: nowrap;
 }
+
 
 /* Search
 -------------------------------------------------- */
@@ -137,6 +148,7 @@ header.banner .title {
     height: 20px;
 }
 
+
 /* Fontello icons
 -------------------------------------------------- */
 .fa {
@@ -156,6 +168,7 @@ header.banner .title {
 .fa-4x {
     font-size: 4em;
 }
+
 
 /* Margin and padding
 -------------------------------------------------- */
@@ -179,10 +192,10 @@ header.banner .title {
     margin-top: 20px;
 }
 
+
 /* Helpers
 -------------------------------------------------- */
 
-/* Unused CSS
 .small {
     font-size: 12px;
 }
@@ -210,12 +223,10 @@ header.banner .title {
 .relative {
     position: relative;
 }
-*/
 
 /* Bootstrap overrides
 -------------------------------------------------- */
 
-/* Unused CSS
 label {
     font-weight: 400;
 }
@@ -250,4 +261,3 @@ label {
 dd {
     margin-bottom: 8px;
 }
-*/
