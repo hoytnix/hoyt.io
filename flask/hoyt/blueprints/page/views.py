@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, make_response
+
+from lib.urls import all_urls
 
 page = Blueprint('pages', __name__, template_folder='templates')
 
@@ -16,3 +18,12 @@ def terms():
 @page.route('/policy/privacy/')
 def privacy():
     return render_template('page/privacy.jinja2')
+
+
+@page.route('/sitemap.xml')
+def sitemap():
+      template = render_template('page/sitemap.jinja2', urls=all_urls())
+      response = make_response(template)
+      response.headers['Content-Type'] = 'application/xml'
+
+      return response
