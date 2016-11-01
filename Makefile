@@ -96,17 +96,20 @@ run_db:
 backup_db:
 	pg_dump -h localhost -p 5432 -U postgres -d hoyt -w --data-only --inserts -f database/backup.sql
 
-.PHONY: serve
-serve:
+.PHONY: compile
+compile:
 	@ echo "Nothing will happen if localhost:5000 isn't available."
 	@ grep -q '200 OK' <<< $$(curl -Is http://localhost:5000 | head -1)
 	cd flask && $(HOYT) freeze -e publish
 	cd static-server && grunt
+
+.PHONY: serve
+serve: compile
 	xdg-open "http://localhost:5001"
 	cd static-server && firebase serve
 
 .PHONY: deploy
-deploy:
+deploy: compile
 	cd static-server && firebase deploy
 
 # SYSTEM DEPENDENCIES ##########################################################

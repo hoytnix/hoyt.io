@@ -1,10 +1,14 @@
 {% extends 'layouts/skeleton.jinja2' %}
-{% from 'blog/macros.jinja2' import post_header %}
+{% from 'blog/macros.jinja2' import post_header, social_buttons %}
 
 {% set title = post.title %}
 {% block meta_description %}{% endblock %}
 
 {% block body %}
+    <style>
+    .fb-comments, .fb-comments iframe[style], .fb-comments span[style] {width: 100% !important;}
+    </style>
+
     {{ post_header(post) }}
     <ol class="breadcrumb">
         <li><a href="{{ url_for('blog.index') }}">Blog</a></li>
@@ -30,6 +34,8 @@
             </li>
         </ol>
     </nav>
+
+    {{ social_buttons() }}
 
     {% if post.comments_enabled %}
         {% include 'layouts/modules/comments.jinja2' %}

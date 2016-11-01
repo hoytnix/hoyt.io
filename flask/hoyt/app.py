@@ -67,9 +67,10 @@ def template_processors(app):
         app.jinja_env
     """
     from lib import current_year
-    from lib.urls import canonical_url_for
+    from lib.urls import canonical_url_for, canonical_request_url
 
     app.jinja_env.globals.update(current_year=current_year)
     app.jinja_env.globals.update(canonical_url_for=canonical_url_for)
+    app.jinja_env.globals.update(canonical_request_url=canonical_request_url)
 
     return app.jinja_env

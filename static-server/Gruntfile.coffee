@@ -63,7 +63,8 @@ module.exports = (grunt) ->
                     src: [
                             'http://0.0.0.0:5000/',
                             'http://0.0.0.0:5000/blog',
-                            'http://0.0.0.0:5000/blog/meta/hello-world-/'
+                            'http://0.0.0.0:5000/blog/meta/hello-world-/',
+                            'http://0.0.0.0:5000/blog/software/youtube-dl/'
                         ]
                     dest: 'public/static/styles/main.css'
                 }]

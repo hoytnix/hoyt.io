@@ -4,7 +4,7 @@ try:
 except ImportError:
     from urllib.parse import urljoin
 
-from flask import url_for
+from flask import url_for, request
 from flask_frozen import Freezer
 from unidecode import unidecode
 
@@ -23,6 +23,11 @@ def all_urls():
 def canonical_url_for(endpoint, **values):
     canonical_url = settings()['CANONICAL_URL']
     return urljoin(canonical_url, url_for(endpoint, **values))
+
+
+def canonical_request_url():
+    canonical_url = settings()['CANONICAL_URL']
+    return urljoin(canonical_url, request.path)
 
 
 def slugify(text, delim=u'-'):

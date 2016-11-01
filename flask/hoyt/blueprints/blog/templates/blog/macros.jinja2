@@ -28,3 +28,23 @@
     </div>
 </div>
 {%- endmacro %}
+
+{% macro social_buttons() -%}
+<h3>Be social!</h3>
+
+<!-- Facebook -->
+<a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_request_url() }}" target="_blank">
+    <i class="fa fa-4x icon-facebook" style="color:#3B5998"></i>
+</a>
+
+<!-- Google Plus -->
+<a href="https://plus.google.com/share?url={{ canonical_request_url() }}" target="_blank">
+    <i class="fa fa-4x icon-gplus" style="color:#DB4437"></i>
+</a>
+
+<!-- Twitter -->
+<a href="https://twitter.com/home?status=Check%20out%20{{ canonical_request_url() }}%20on%20Michael%20Hoyt's%20blog!" target="_blank">
+    <i class="fa fa-4x icon-twitter" style="color:#1DA1F3"></i>
+</a>
+
+{%- endmacro %}

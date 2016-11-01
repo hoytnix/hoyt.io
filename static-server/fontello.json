@@ -1,5 +1,5 @@
 {
-	"name": "78c34f8c58a76fc4a7898b4e46a5cea7",
+	"name": "da94d4d61147551f6ae1c2983ef19aeb",
 	"css_prefix_text": "icon-",
 	"css_use_suffix": false,
 	"hinting": true,
@@ -34,6 +34,24 @@
 			"uid": "a3f89e106175a5c5c4e9738870b12e55",
 			"css": "tags",
 			"code": 59394,
+			"src": "fontawesome"
+		},
+		{
+			"uid": "4743b088aa95d6f3b6b990e770d3b647",
+			"css": "facebook",
+			"code": 62216,
+			"src": "fontawesome"
+		},
+		{
+			"uid": "906348dc798a0d42715cc97c875e3ac6",
+			"css": "twitter",
+			"code": 62212,
+			"src": "fontawesome"
+		},
+		{
+			"uid": "f0cf7db1b03cb65adc450aa3bdaf8c4d",
+			"css": "gplus",
+			"code": 61652,
 			"src": "fontawesome"
 		}
 	]
