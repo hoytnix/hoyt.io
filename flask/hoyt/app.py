@@ -3,8 +3,10 @@ from flask_admin.contrib.sqla import ModelView
 
 from hoyt.settings import settings
 from hoyt.extensions import admin, db, md
-from lib.dates import current_year
 from lib.imports import all_blueprints, all_models
+
+from lib.dates import current_year
+from lib.urls import canonical_url_for
 
 
 def create_app(environment=None, settings_override=None):
@@ -69,5 +71,6 @@ def template_processors(app):
     """
 
     app.jinja_env.globals.update(current_year=current_year)
+    app.jinja_env.globals.update(canonical_url_for=canonical_url_for)
 
     return app.jinja_env
