@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, abort
 
-from .models import Post, Category
+from .models import Post, Category, Tag
 
 blog = Blueprint(
     'blog', __name__, template_folder='templates', url_prefix='/blog')
 
+
+#    Blog Index -------------------------------------------------------------------------
 
 @blog.route('/')
 def index():
@@ -17,27 +19,7 @@ def index():
         'blog/index.jinja2', categories=categories, posts=posts)
 
 
-@blog.route('/<slug>/')
-def category_detail(slug):
-    """Display everything related to the category.
-
-    Args:
-        slug (str): key to search for category.
-    """
-
-    result = None
-
-    categories = Category.query.all()
-    for category in categories:
-        if category.slug == slug:
-            result = category
-            break
-
-    if not result:
-        abort(404)
-
-    return render_template('blog/category_detail.jinja2', category=result)
-
+#    Post Details -----------------------------------------------------------------------
 
 @blog.route('/<category_slug>/<post_slug>/')
 def post_detail(category_slug, post_slug):
@@ -64,3 +46,37 @@ def post_detail(category_slug, post_slug):
         abort(404)
 
     return render_template('blog/post_detail.jinja2', post=result)
+
+
+#    Search Results ---------------------------------------------------------------------
+
+@blog.route('/<slug>/')
+def category_detail(slug):
+    result = None
+
+    categories = Category.query.all()
+    for category in categories:
+        if category.slug == slug:
+            result = category
+            break
+
+    if not result:
+        abort(404)
+
+    return render_template('blog/result_list.jinja2', result=result)
+
+
+@blog.route('/tag/<slug>/')
+def tag_detail(slug):
+    result = None
+
+    tags = Tag.query.all()
+    for tag in tags:
+        if tag.slug == slug:
+            result = tag
+            break
+
+    if not result:
+        abort(404)
+
+    return render_template('blog/result_list.jinja2', result=result)

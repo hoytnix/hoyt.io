@@ -10,12 +10,20 @@ from lib.urls import slugify
 from lib.util_sqlalchemy import ResourceMixin
 
 
+# Many-to-many relationships.
+tags = db.Table('tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+    db.Column('post_id', db.Integer, db.ForeignKey('posts.id'))
+)
+
+
 class Post(ResourceMixin, db.Model):
     __tablename__ = 'posts'  # plural lower-case
     id = db.Column(db.Integer, primary_key=True)
 
     # Relationships.
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    tags = db.relationship('Tag', secondary=tags, backref='posts', lazy='dynamic')
 
     # Details
     title = db.Column(db.String(128))
@@ -154,6 +162,35 @@ class Category(db.Model):
     @property
     def url_for(self):
         return url_for('blog.category_detail', slug=self.slug)
+
+    @property
+    def slug(self):
+        return slugify(self.title)
+
+    def __str__(self):
+        return self.title
+
+
+class Tag(db.Model):
+    #__tablename__ = 'tags'  # plural lower-case
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Details
+    title = db.Column(db.String(128), nullable=False)
+
+    @property
+    def most_recent_posts(self):
+        return Post.query.filter(Post.tags.any(Tag.title == self.title)) \
+                        .filter_by(is_published=True) \
+                        .order_by(Post.updated_on.desc()).all()
+
+    @property
+    def href(self):
+        return '<a href="{}">{}</a>'.format(self.url_for, self.title)
+
+    @property
+    def url_for(self):
+        return url_for('blog.tag_detail', slug=self.slug)
 
     @property
     def slug(self):

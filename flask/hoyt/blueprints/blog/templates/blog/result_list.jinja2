@@ -1,17 +1,17 @@
 {% extends 'layouts/skeleton.jinja2' %}
 {% from 'blog/macros.jinja2' import post_preview %}
 
-{% set title = category.title %}
+{% set title = result.title %}
 {% block meta_description %}{% endblock %}
 
 {% block body %}
-    <h1>{{ category.title }}</h1>
+    <h1>{{ result.title }}</h1>
     <ol class="breadcrumb">
         <li><a href="{{ url_for('blog.index') }}">Blog</a></li>
-        <li class="active">{{ category }}</li>
+        <li class="active">{{ result }}</li>
     </ol>
 
-    {% for post in category.most_recent_posts %}
+    {% for post in result.most_recent_posts %}
         {{ post_preview(post) }}
     {% endfor %}
 {% endblock %}
