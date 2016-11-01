@@ -5,9 +5,6 @@ from hoyt.settings import settings
 from hoyt.extensions import admin, db, md
 from lib.imports import all_blueprints, all_models
 
-from lib.dates import current_year
-from lib.urls import canonical_url_for
-
 
 def create_app(environment=None, settings_override=None):
     """Create a Flask application using the app factory pattern.
@@ -69,6 +66,8 @@ def template_processors(app):
     Returns:
         app.jinja_env
     """
+    from lib import current_year
+    from lib.urls import canonical_url_for
 
     app.jinja_env.globals.update(current_year=current_year)
     app.jinja_env.globals.update(canonical_url_for=canonical_url_for)

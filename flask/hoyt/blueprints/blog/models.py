@@ -6,7 +6,7 @@ import pytz
 from flask import url_for
 
 from hoyt.extensions import db
-from lib.slugs import slugify
+from lib.urls import slugify
 from lib.util_sqlalchemy import ResourceMixin
 
 

@@ -27,3 +27,8 @@ def sitemap():
       response.headers['Content-Type'] = 'application/xml'
 
       return response
+
+
+@page.route('/google36c6d388c4053b8a.html')
+def google_webmaster():
+    return render_template('page/google_webmaster.jinja2')

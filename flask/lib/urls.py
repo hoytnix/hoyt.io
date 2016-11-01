@@ -1,9 +1,17 @@
-from flask_frozen import Freezer
+import re
+try:
+    from urlparse import urljoin
+except ImportError:
+    from urllib.parse import urljoin
 
 from flask import url_for
+from flask_frozen import Freezer
+from unidecode import unidecode
 
 from hoyt.app import create_app
 from hoyt.settings import settings
+
+_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
 
 
 def all_urls():
@@ -14,4 +22,26 @@ def all_urls():
 
 def canonical_url_for(endpoint, **values):
     canonical_url = settings()['CANONICAL_URL']
-    return canonical_url + url_for(endpoint, **values)
+    return urljoin(canonical_url, url_for(endpoint, **values))
+
+
+def slugify(text, delim=u'-'):
+    """Return an ASCII-only slug.
+
+    Lovingly taken from FlaskBB. <@shanks>
+    License: BSD 3-Clause
+
+    Args:
+        text (str): text to "slugify".
+        delim (str): Default '-'. Delimiter for whitespace.
+
+    Returns:
+        str: normalized, delimited string for urls.
+    """
+
+    text = text.replace('.', '')
+    text = unidecode(text)
+    result = []
+    for word in _punct_re.split(text.lower()):
+        result.append(word)
+    return delim.join(result)
