@@ -211,6 +211,8 @@ test-int: install ## Run the integration tests
 
 .PHONY: test-all
 test-all: install ## Run all the tests
+	@ echo "Nothing will happen if the database isn't running."
+	@ timeout 1 bash -c 'cat < /dev/null > /dev/tcp/localhost/5432'
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
