@@ -43,7 +43,7 @@ else
 endif
 
 # Virtual environment paths
-REALPATH := $(shell realpath .)
+REALPATH := $(shell python -c "import os; print(os.getcwd())")
 ENV := $(REALPATH)/env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
