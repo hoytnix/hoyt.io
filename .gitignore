@@ -28,3 +28,9 @@ htmlcov/
 xmlreport/
 /pyunit.xml
 *.tmp
+
+#
+# database
+#
+
+nohup.out

@@ -90,6 +90,7 @@ run: install
 
 .PHONY: run_db ## Start the database
 run_db:
+	nohup $(PYTHON) database/monitor.py &
 	cd database && docker-compose up --build
 
 .PHONY: backup_db
