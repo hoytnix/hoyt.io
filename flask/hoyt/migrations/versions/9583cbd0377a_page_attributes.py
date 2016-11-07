@@ -1,4 +1,4 @@
-"""'9583cbd0377a' - Page attributes"""
+"""'9583cbd0377a' - Page attributes."""
 
 import sqlalchemy as sa
 

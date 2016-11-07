@@ -1,4 +1,4 @@
-"""${repr(up_revision)} - ${message}"""
+"""${repr(up_revision)} - ${message}."""
 
 import sqlalchemy as sa
 

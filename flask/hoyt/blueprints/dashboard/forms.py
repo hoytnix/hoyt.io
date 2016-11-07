@@ -1,3 +1,4 @@
+# pylint: disable=unused-import
 from flask_wtf import Form
 from wtforms import (SelectField, StringField, TextAreaField, BooleanField,
                      IntegerField, FloatField, DateTimeField)

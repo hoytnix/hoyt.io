@@ -1,4 +1,4 @@
-"""'d987888a7460' - Tags table"""
+"""'d987888a7460' - Tags table."""
 
 import sqlalchemy as sa
 

@@ -1,4 +1,4 @@
-"""'216ce379d3f0' - Blog tags m2m"""
+"""'216ce379d3f0' - Blog tags m2m."""
 
 import sqlalchemy as sa
 
