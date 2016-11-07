@@ -4,7 +4,7 @@ from wtforms import (SelectField, StringField, TextAreaField, BooleanField,
                      IntegerField, FloatField, DateTimeField)
 from wtforms.validators import (DataRequired, Length, Optional, Regexp,
                                 NumberRange)
-from wtforms_alchemy import Unique
+from wtforms_components import Email#Unique
 
 from lib.util_wtforms import ModelForm
 

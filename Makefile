@@ -10,10 +10,10 @@
 
 # Project settings
 PROJECT := Hoyt.IO
-PACKAGE := flask/hoyt
+PACKAGE := flask-server/hoyt
 REPOSITORY := hoytnix/hoyt.io
-PACKAGES := $(PACKAGE) flask/tests
-CONFIG := $(shell ls flask/*.py)
+PACKAGES := $(PACKAGE) flask-server/tests
+CONFIG := $(shell ls flask-server/*.py)
 MODULES := $(shell find $(PACKAGES) -name '*.py') $(CONFIG)
 
 # Python settings
@@ -45,6 +45,7 @@ endif
 # Virtual environment paths
 REALPATH := $(shell python -c "import os; print(os.getcwd())")
 ENV := $(REALPATH)/env
+PYTHONPATH := $(ENV)/lib/python3.5
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	ACTIVATE := $(BIN)/activate.bat
@@ -78,7 +79,7 @@ YAPF := $(BIN_)yapf
 all: doc
 
 .PHONY: ci
-ci: check #test ## Run all tasks that determine CI status
+ci: check test ## Run all tasks that determine CI status
 
 .PHONY: watch
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
@@ -86,7 +87,7 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run ## Start the program
 run: install
-	cd flask && $(HOYT) run
+	cd flask-server && $(HOYT) run
 
 .PHONY: run_db ## Start the database
 run_db:
@@ -101,7 +102,7 @@ backup_db:
 compile:
 	@ echo "Nothing will happen if localhost:5000 isn't available."
 	@ grep -q '200 OK' <<< $$(curl -Is http://localhost:5000 | head -1)
-	cd flask && $(HOYT) freeze -e publish
+	cd flask-server && $(HOYT) freeze -e publish
 	cd static-server && grunt
 
 .PHONY: serve
@@ -128,11 +129,11 @@ DEPS_BASE := $(ENV)/.install-base
 .PHONY: install
 install: $(DEPS_CI) $(DEPS_DEV) $(DEPS_BASE) ## Install all project dependencies
 
-$(DEPS_CI): flask/requirements-ci.txt $(PIP)
+$(DEPS_CI): flask-server/requirements-ci.txt $(PIP)
 	$(PIP) install --upgrade -r $<
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPS_DEV): flask/requirements-dev.txt $(PIP)
+$(DEPS_DEV): flask-server/requirements-dev.txt $(PIP)
 	$(PIP) install --upgrade -r $<
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
@@ -143,8 +144,8 @@ else ifdef LINUX
 endif
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPS_BASE): flask/setup.py flask/requirements.txt $(PYTHON)
-	$(PIP) install -e flask/
+$(DEPS_BASE): flask-server/setup.py flask-server/requirements.txt $(PYTHON)
+	$(PIP) install -e flask-server/
 	@ touch $@  # flag to indicate dependencies are installed
 
 $(PIP): $(PYTHON)
@@ -168,15 +169,15 @@ pep257: install ## Check for docstring issues
 
 .PHONY: pylint
 pylint: install ## Check for code issues
-	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=flask/.pylintrc
+	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=flask-server/.pylintrc
 
 .PHONY: format
 format: install ## Autoformat code
-	cd flask && $(YAPF) -ri .
+	cd flask-server && $(YAPF) -ri .
 
 # TESTS ########################################################################
 
-PYTEST := $(BIN_)py.test
+PYTEST := export PYTHONPATH=$(PYTHONPATH); $(BIN_)py.test
 COVERAGE := $(BIN_)coverage
 COVERAGE_SPACE := $(BIN_)coverage.space
 

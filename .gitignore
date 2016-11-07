@@ -12,8 +12,8 @@ __pycache__/
 
 static-server/node_modules/
 static-server/public/
-flask/hoyt/static/font
-flask/hoyt/static/fontello
+flask-server/hoyt/static/font
+flask-server/hoyt/static/fontello
 
 #
 # continuous integration
