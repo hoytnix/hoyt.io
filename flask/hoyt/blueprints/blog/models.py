@@ -9,12 +9,10 @@ from hoyt.extensions import db
 from lib.urls import slugify
 from lib.util_sqlalchemy import ResourceMixin
 
-
 # Many-to-many relationships.
 tags = db.Table('tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-    db.Column('post_id', db.Integer, db.ForeignKey('posts.id'))
-)
+                db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+                db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
 
 
 class Post(ResourceMixin, db.Model):
@@ -23,7 +21,8 @@ class Post(ResourceMixin, db.Model):
 
     # Relationships.
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    tags = db.relationship('Tag', secondary=tags, backref='posts', lazy='dynamic')
+    tags = db.relationship(
+        'Tag', secondary=tags, backref='posts', lazy='dynamic')
 
     # Details
     title = db.Column(db.String(128))

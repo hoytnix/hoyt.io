@@ -5,8 +5,8 @@ from .models import Post, Category, Tag
 blog = Blueprint(
     'blog', __name__, template_folder='templates', url_prefix='/blog')
 
-
 #    Blog Index -------------------------------------------------------------------------
+
 
 @blog.route('/')
 def index():
@@ -20,6 +20,7 @@ def index():
 
 
 #    Post Details -----------------------------------------------------------------------
+
 
 @blog.route('/<category_slug>/<post_slug>/')
 def post_detail(category_slug, post_slug):
@@ -49,6 +50,7 @@ def post_detail(category_slug, post_slug):
 
 
 #    Search Results ---------------------------------------------------------------------
+
 
 @blog.route('/<slug>/')
 def category_detail(slug):

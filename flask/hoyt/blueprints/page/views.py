@@ -22,11 +22,11 @@ def privacy():
 
 @page.route('/sitemap.xml')
 def sitemap():
-      template = render_template('page/sitemap.jinja2', urls=all_urls())
-      response = make_response(template)
-      response.headers['Content-Type'] = 'application/xml'
+    template = render_template('page/sitemap.jinja2', urls=all_urls())
+    response = make_response(template)
+    response.headers['Content-Type'] = 'application/xml'
 
-      return response
+    return response
 
 
 #@page.route('/google36c6d388c4053b8a.html')

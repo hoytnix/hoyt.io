@@ -1,8 +1,11 @@
 from hoyt.extensions import db
 
+
 class Obj:
     def __str__(self):
-        return '\n'.join('{} => {}'.format(k, self.__dict__[k]) for k in self.__dict__)
+        return '\n'.join('{} => {}'.format(k, self.__dict__[k])
+                         for k in self.__dict__)
+
 
 class Attribute(db.Model):
     __tablename__ = 'attributes'  # plural lower-case
