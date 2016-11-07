@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_admin.contrib.sqla import ModelView
 
 from hoyt.settings import settings
@@ -28,6 +28,17 @@ def create_app(environment=None, settings_override=None):
 
     template_processors(app)
     extensions(app)
+
+    @app.after_request
+    def update_last_modified(response):
+        from hoyt.blueprints.page import LastModified
+        try:
+            source = response.get_data()
+            source = source.decode('utf-8', 'ignore')
+        except:
+            return response
+        LastModified.select(request.path).update_time(source)
+        return response
 
     return app
 
