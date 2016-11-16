@@ -1,7 +1,6 @@
 import click
 
-from flask_frozen import Freezer
-
+from hoyt.extensions import Freezer
 from hoyt.app import create_app
 
 

@@ -107,7 +107,7 @@ compile:
 
 .PHONY: serve
 serve: compile
-	xdg-open "http://localhost:5001"
+	eval "sleep 3; xdg-open http://localhost:5001" &
 	cd static-server && firebase serve
 
 .PHONY: deploy

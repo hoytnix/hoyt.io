@@ -5,9 +5,9 @@ except ImportError:
     from urllib.parse import urljoin
 
 from flask import url_for, request
-from flask_frozen import Freezer
 from unidecode import unidecode
 
+from hoyt.extensions import Freezer
 from hoyt.app import create_app
 from hoyt.settings import settings
 
