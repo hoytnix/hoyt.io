@@ -9,7 +9,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
     ELSE
         CREATE DATABASE hoyt;
 
-    IF EXISTS (SELECT 1 FROM pg_database WHERE datname = 'hoyt') THEN
+    IF EXISTS (SELECT 1 FROM pg_database WHERE datname = 'test_hoyt') THEN
         RAISE NOTICE 'Database already exists';
     ELSE
         CREATE DATABASE test_hoyt;

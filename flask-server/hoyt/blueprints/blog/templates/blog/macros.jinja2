@@ -2,7 +2,7 @@
 <div class="page-header">
     <h{{ heading }}>{{ post.title }}</h{{ heading }}>
     <div class="post-meta-details">
-        <i class="fa fa-fw icon-hourglass"></i> <script>document.write(moment("{{ post.updated_on }}").format('MMM Do YYYY'));</script>
+        <i class="fa fa-fw icon-hourglass"></i> <script>document.write(moment("{{ post.updated_on }}").format('MMMM Do, YYYY'));</script>
         <i class="fa fa-fw icon-book"></i> {{ post.category.href }}
 
         {% set first_tag = True %}

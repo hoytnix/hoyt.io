@@ -11,7 +11,7 @@ from unidecode import unidecode
 from hoyt.app import create_app
 from hoyt.settings import settings
 
-_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
+_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.:]+')
 
 
 def all_urls():

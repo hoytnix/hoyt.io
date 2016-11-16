@@ -3,9 +3,7 @@
 {% block body %}
   <p>
     This privacy policy discloses the privacy practices for
-    <a href="http://{{ config.get('SERVER_NAME') }}">
-      http://{{ config.get('SERVER_NAME') }}
-    </a>.
+    <a href="{{ config['CANONICAL_URL'] }}">{{ config['CANONICAL_URL'] }}</a>.
     This privacy policy applies solely to information collected by this web
     site. It will notify you of the following:
   </p>
