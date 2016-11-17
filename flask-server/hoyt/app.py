@@ -80,11 +80,13 @@ def template_processors(app):
     from lib import current_year
     from lib.urls import canonical_url_for, canonical_request_url
     from hoyt.blueprints.page.models import Attribute, LastModified
+    from hoyt.blueprints.blog.models import Tag
 
     app.jinja_env.globals.update(current_year=current_year)
     app.jinja_env.globals.update(canonical_url_for=canonical_url_for)
     app.jinja_env.globals.update(canonical_request_url=canonical_request_url)
     app.jinja_env.globals.update(page_attributes=Attribute.attribute_dict)
     app.jinja_env.globals.update(last_modified=LastModified.select)
+    app.jinja_env.globals.update(tag_cloud_dict=Tag.tag_cloud)
 
     return app.jinja_env

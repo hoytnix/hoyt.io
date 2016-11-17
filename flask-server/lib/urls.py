@@ -17,7 +17,7 @@ _punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.:]+')
 def all_urls():
     app = create_app()
     freezer = Freezer(app, with_static_files=False)
-    return [url for url, _ in freezer._generate_all_urls()]
+    return [url for url in freezer.all_urls()]
 
 
 def canonical_url_for(endpoint, **values):

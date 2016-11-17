@@ -177,6 +177,19 @@ class Tag(db.Model):
     # Details
     title = db.Column(db.String(128), nullable=False)
 
+    @classmethod
+    def tag_cloud(cls):
+        d = {}
+        posts = Post.query.all()
+        for post in posts:
+            tags = post.tags
+            for tag in tags:
+                if tag not in d:
+                    d[tag] = 1
+                else:
+                    d[tag] += 1
+        return d
+
     @property
     def most_recent_posts(self):
         return Post.query.filter(Post.tags.any(Tag.title == self.title)) \

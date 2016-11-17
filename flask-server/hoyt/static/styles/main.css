@@ -82,6 +82,19 @@ body {
 
 .fb-comments, .fb-comments iframe[style], .fb-comments span[style] {width: 100% !important;}
 
+.tag-cloud {
+    padding-top: 10px;
+}
+
+.tag-cloud-title {
+    font-weight: bold;
+    font-size: 125%;
+}
+
+.tag-cloud span {
+    padding-right: 5px;
+}
+
 
 /* Banner - page cover
 -------------------------------------------------- */
