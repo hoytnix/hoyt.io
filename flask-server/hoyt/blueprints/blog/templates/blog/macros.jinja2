@@ -53,7 +53,7 @@
     <div class="tag-cloud-title">Tag Cloud:</div>
     {% set cloud = tag_cloud_dict() %}
     {% for tag in cloud %}
-        <span style="font-size:1{{ cloud[tag] * 10 }}%">{{ tag.href }}</span>
+        <span style="font-size:1{{ tag["count"] * 10 }}%">{{ tag["tag"].href }}</span>
     {% endfor %}
 </div>
 {% endmacro %}

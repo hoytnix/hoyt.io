@@ -179,16 +179,17 @@ class Tag(db.Model):
 
     @classmethod
     def tag_cloud(cls):
-        d = {}
+        count = {}
         posts = Post.query.all()
         for post in posts:
             tags = post.tags
             for tag in tags:
-                if tag not in d:
-                    d[tag] = 1
+                if tag not in count:
+                    count[tag] = 1
                 else:
-                    d[tag] += 1
-        return d
+                    count[tag] += 1
+
+        return sorted([{"tag": tag, "count": count[tag]} for tag in count], key=lambda k: k['tag'].title)
 
     @property
     def most_recent_posts(self):
