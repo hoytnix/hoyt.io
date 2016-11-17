@@ -152,7 +152,7 @@ class Category(db.Model):
     def most_recent_posts(self):
         return Post.query.filter_by(category_id=self.id) \
                         .filter_by(is_published=True) \
-                        .order_by(Post.updated_on.desc()).all()
+                        .order_by(Post.created_on.desc()).all()
 
     @property
     def href(self):
@@ -181,7 +181,7 @@ class Tag(db.Model):
     def most_recent_posts(self):
         return Post.query.filter(Post.tags.any(Tag.title == self.title)) \
                         .filter_by(is_published=True) \
-                        .order_by(Post.updated_on.desc()).all()
+                        .order_by(Post.created_on.desc()).all()
 
     @property
     def href(self):

@@ -5,6 +5,27 @@ from .models import Post, Category, Tag
 blog = Blueprint(
     'blog', __name__, template_folder='templates', url_prefix='/blog')
 
+
+def custom_list_view(key):
+    import os
+    cd = os.path.dirname(os.path.abspath(__file__))
+    lists_dir = os.path.join(cd, 'templates/blog/lists')
+
+    result = None
+    for (root, dir_names, file_names) in os.walk(lists_dir):
+        for file_name in file_names:
+            if key in file_name:
+                result = file_name
+                break
+        if result:
+            break
+
+    if result:
+        return 'blog/lists/' + file_name
+    else:
+        return 'blog/result_list.jinja2'
+
+
 #    Blog Index -------------------------------------------------------------------------
 
 
@@ -14,7 +35,7 @@ def index():
 
     categories = Category.query.all()
     posts = Post.query.filter_by(is_published=True) \
-                    .order_by(Post.updated_on.desc()).limit(10)
+                    .order_by(Post.created_on.desc()).limit(10)
     return render_template(
         'blog/index.jinja2', categories=categories, posts=posts)
 
@@ -65,7 +86,8 @@ def category_detail(slug):
     if not result:
         abort(404)
 
-    return render_template('blog/result_list.jinja2', result=result)
+    template_file = custom_list_view(key=slug)
+    return render_template(template_file, result=result)
 
 
 @blog.route('/tag/<slug>/')
@@ -81,4 +103,5 @@ def tag_detail(slug):
     if not result:
         abort(404)
 
-    return render_template('blog/result_list.jinja2', result=result)
+    template_file = custom_list_view(key=slug)
+    return render_template(template_file, result=result)
