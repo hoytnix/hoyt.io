@@ -2,6 +2,7 @@ import warnings
 
 from flask_frozen import Freezer as _Freezer
 
+
 class RedirectWarning(Warning):
     pass
 
@@ -14,7 +15,6 @@ class Freezer(_Freezer):
         super(Freezer, self).init_app(app)
         app.config.setdefault('FREEZER_ENDPOINT_BLACKLIST', [])
         app.config.setdefault('FREEZER_URL_BLACKLIST', [])
-
 
     def _generate_all_urls(self):
         for url, endpoint in super(Freezer, self)._generate_all_urls():

@@ -189,7 +189,12 @@ class Tag(db.Model):
                 else:
                     count[tag] += 1
 
-        return sorted([{"tag": tag, "count": count[tag]} for tag in count], key=lambda k: k['tag'].title)
+        return sorted(
+            [{
+                "tag": tag,
+                "count": count[tag]
+            } for tag in count],
+            key=lambda k: k['tag'].title)
 
     @property
     def most_recent_posts(self):
