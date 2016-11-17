@@ -34,3 +34,4 @@ xmlreport/
 #
 
 nohup.out
+database/backup.sql

@@ -13,12 +13,13 @@ CONFIG = {
 
 
 def current_time():
-    return strftime('%H:%M:%S')
+    return strftime('%Y-%m-%d %H:%M:%S')
 
 
 def main():
     initial_startup = True
     count = 0
+    last_backup_file = None
     while True:
         # Check if the database is running.
         try:
@@ -46,10 +47,14 @@ def main():
         if new_backup != current_backup:
             with open(backup_file, 'w+') as stream:
                 stream.write(new_backup)
-            print('[{}] Backed up the database!'.format(current_time()))
+            print('[{}] Backed up the database to file!'.format(current_time()))
+            last_backup_file = backup_file
 
-        sleep(1)
+        sleep(60)
 
+    cmd = "gdrive upload --parent 0BynPj1yBdtYmUV9rU0ZTaXgyalU --name backup-$(date --iso-8601=seconds).sql " + backup_file
+    check_output(cmd, shell=True)
+    print('[{}] Backed up the database to Google Drive!'.format(current_time()))
     print('[{}] Goodbye!'.format(current_time()))
 
 
