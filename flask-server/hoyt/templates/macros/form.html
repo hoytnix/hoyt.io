@@ -60,7 +60,7 @@
     <form action="{{ url_for(endpoint, **kwargs) }}" method="{{ method }}"
           id="{{ fid }}" class="{{ css_class }}" role="form">
         {{ form.hidden_tag() }}
-        {{ caller () }}
+        {{ caller ()|safe }}
     </form>
 {%- endmacro -%}
 
