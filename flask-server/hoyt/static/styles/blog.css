@@ -1,0 +1,92 @@
+/* Blog - preview
+-------------------------------------------------- */
+
+.post-preview {
+    padding-bottom: 40px;
+    border-bottom: 2px solid #e9e9e9;
+}
+
+.post-preview:hover {
+    background-color: #e9e9e9;
+}
+
+.post-preview-all-link {
+    padding-top: 20px;
+}
+
+
+/* Blog - post navigation
+-------------------------------------------------- */
+
+.post-navigation {
+    padding: 20px 0px 40px 0px;
+}
+
+.post-nav-list {
+    list-style: none;
+    padding-left: 0px;
+
+    max-width: 1170px;
+}
+
+.post-nav-item {
+    float: left;
+    width: 50%;
+    min-height: 1px;
+}
+
+.post-nav-item > strong {
+    font-weight: normal;
+    font-size: 90%;
+}
+
+.post-nav-item > a {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Blog - Facebook comments
+-------------------------------------------------- */
+
+.fb-comments, .fb-comments iframe[style], .fb-comments span[style] {width: 100% !important;}
+
+.tag-cloud {
+    padding-top: 10px;
+}
+
+.tag-cloud-title {
+    font-weight: bold;
+    font-size: 125%;
+}
+
+.tag-cloud span {
+    padding-right: 5px;
+}
+
+
+/* Banner - page cover
+-------------------------------------------------- */
+
+header.banner {
+    position: relative;
+    height: 300px;
+}
+
+header.banner .title {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 4px 8px;
+    color: white;
+    margin: 0;
+}
+
+.title h1 {
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 3rem;
+    white-space: nowrap;
+}

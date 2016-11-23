@@ -18,7 +18,7 @@
 {%- endmacro %}
 
 {% macro post_preview(post) -%}
-<div class="post-preview">
+<div class="post-preview" onclick="location.href='{{ post.url_for }}'" style="cursor: pointer">
     {{ post_header(post, heading=2) }}
 
     {{ post.preview_text|markdown }}

@@ -1,9 +1,11 @@
 {% if config['DEBUG'] %}
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/vendor/bootstrap.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/vendor/bootstrap.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/vendor/normalize.css')}}"
 
     <!-- App overrides -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/blog.css') }}">
 
     <!-- Vendor applications -->
     <link rel="stylesheet" href="{{ url_for('static', filename='fontello/fontello.css') }}">

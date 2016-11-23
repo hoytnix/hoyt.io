@@ -7,9 +7,11 @@ html {
 }
 
 body {
+    margin: 0 auto;
+    padding: 0 auto;
+
     padding-top: 50px;
     padding-bottom: 20px;
-
     margin-bottom: 60px;
 }
 
@@ -30,135 +32,6 @@ body {
 #footer-right a {
     padding-left: 5px;
     padding-right: 5px;
-}
-
-
-/* Blog - preview
--------------------------------------------------- */
-
-.post-preview {
-    padding-bottom: 40px;
-}
-
-.post-preview-all-link {
-    padding-top: 20px;
-}
-
-
-/* Blog - post navigation
--------------------------------------------------- */
-
-.post-navigation {
-    padding: 20px 0px 40px 0px;
-}
-
-.post-nav-list {
-    list-style: none;
-    padding-left: 0px;
-
-    max-width: 1170px;
-}
-
-.post-nav-item {
-    float: left;
-    width: 50%;
-    min-height: 1px;
-}
-
-.post-nav-item > strong {
-    font-weight: normal;
-    font-size: 90%;
-}
-
-.post-nav-item > a {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
-/* Blog - Facebook comments
--------------------------------------------------- */
-
-.fb-comments, .fb-comments iframe[style], .fb-comments span[style] {width: 100% !important;}
-
-.tag-cloud {
-    padding-top: 10px;
-}
-
-.tag-cloud-title {
-    font-weight: bold;
-    font-size: 125%;
-}
-
-.tag-cloud span {
-    padding-right: 5px;
-}
-
-
-/* Banner - page cover
--------------------------------------------------- */
-
-header.banner {
-    position: relative;
-    height: 300px;
-}
-
-header.banner .title {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: rgba(0, 0, 0, 0.75);
-    padding: 4px 8px;
-    color: white;
-    margin: 0;
-}
-
-.title h1 {
-    text-transform: uppercase;
-    margin: 0;
-    font-size: 3rem;
-    white-space: nowrap;
-}
-
-
-/* Search
--------------------------------------------------- */
-
-.index-panels {
-    position: relative;
-    margin-bottom: 10px;
-}
-
-.index-panels:after {
-    content: " ";
-    z-index: 10;
-    display: block;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: inherit;
-}
-
-.index-panels h3 {
-    z-index: 15;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 900;
-    color: white;
-    text-transform: uppercase;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 2rem;
-    transform: translate(-50%, -50%);
-}
-
-.table-main-results {
-    font-size: 200%;
-    height: 20px;
 }
 
 
