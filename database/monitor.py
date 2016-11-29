@@ -40,7 +40,7 @@ def main():
         with open(backup_file, 'r') as stream:
             current_backup = stream.read()
 
-        cmd = 'pg_dump -h {host} -p {port} -U {user} -d {dbname} -w --data-only --inserts'.format(**CONFIG)
+        cmd = 'pg_dump -h {host} -p {port} -U {user} -d {dbname} --no-password'.format(**CONFIG)
         new_backup = check_output(cmd, shell=True).decode('utf-8')
 
         # Replace backup
@@ -52,10 +52,11 @@ def main():
 
         sleep(60)
 
-    cmd = "gdrive upload --parent 0BynPj1yBdtYmUV9rU0ZTaXgyalU --name backup-$(date --iso-8601=seconds).sql " + backup_file
-    check_output(cmd, shell=True)
-    print('[{}] Backed up the database to Google Drive!'.format(current_time()))
-    print('[{}] Goodbye!'.format(current_time()))
+    if last_backup_file:
+        cmd = "gdrive upload --parent 0BynPj1yBdtYmUV9rU0ZTaXgyalU --name backup-$(date --iso-8601=seconds).sql {}".format(last_backup_file)
+        check_output(cmd, shell=True)
+        print('[{}] Backed up the database to Google Drive!'.format(current_time()))
+        print('[{}] Goodbye!'.format(current_time()))
 
 
 if __name__ == '__main__':
