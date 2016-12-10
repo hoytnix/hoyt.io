@@ -60,7 +60,14 @@ def extensions(app):
     _admin = admin(
         app, url='/admin', name='Hoyt.IO', template_mode='bootstrap3')
     for model in all_models():
-        _admin.add_view(ModelView(model, db.session))
+        try:
+            if model.__adminview__:
+                _admin.add_view(model.__adminview__(model, db.session))
+            else:
+                _admin.add_view(ModelView(model, db.session))
+        except:
+            _admin.add_view(ModelView(model, db.session))
+
 
     # Flask-Misaka
     md.init_app(app)

@@ -5,6 +5,7 @@ import hashlib
 import pytz
 from flask import url_for
 from sqlalchemy import or_
+from flask_admin.contrib.sqla import ModelView
 
 from hoyt.extensions import db
 from lib.urls import slugify
@@ -16,9 +17,18 @@ tags = db.Table('tags',
                 db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
 
 
+# Flask-Admin views
+class PostModelView(ModelView):
+    column_exclude_list = [
+        'body',     # too large
+        'file_hash' # unnecessarily human readable
+    ]
+
+
 class Post(ResourceMixin, db.Model):
     __tablename__ = 'posts'  # plural lower-case
     id = db.Column(db.Integer, primary_key=True)
+    __adminview__ = PostModelView
 
     # Relationships.
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
