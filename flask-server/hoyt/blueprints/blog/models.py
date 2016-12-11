@@ -1,11 +1,11 @@
 import os
 import datetime
-import hashlib
 
 import pytz
 from flask import url_for
 from sqlalchemy import or_
 from flask_admin.contrib.sqla import ModelView
+from diff_match_patch import diff_match_patch
 
 from hoyt.extensions import db
 from lib.urls import slugify
@@ -17,31 +17,37 @@ tags = db.Table('tags',
                 db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
 
 
-# Flask-Admin views
-class PostModelView(ModelView):
-    column_exclude_list = [
-        'body',     # too large
-        'file_hash' # unnecessarily human readable
-    ]
-
-
 class Post(ResourceMixin, db.Model):
     __tablename__ = 'posts'  # plural lower-case
     id = db.Column(db.Integer, primary_key=True)
-    __adminview__ = PostModelView
 
     # Relationships.
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     tags = db.relationship(
-        'Tag', secondary=tags, backref='posts', lazy='dynamic')
+        'Tag', secondary=tags, backref='post', lazy='dynamic')
+    revisions = db.relationship('PostRevision', backref='post', lazy='dynamic')
 
     # Details
     title = db.Column(db.String(128))
-    body = db.Column(db.Text)
     comments_enabled = db.Column(db.Boolean, default=True)
     is_published = db.Column(db.Boolean, default=False)
     preview_paragraphs = db.Column(db.Integer, default=2)
-    file_hash = db.Column(db.String(128))
+
+    @property
+    def body(self):
+        dmp = diff_match_patch()
+        revisions = PostRevision.query.filter_by(
+            post_id=self.id).order_by(PostRevision.created_on.asc()).all()
+        text = ''
+        for revision in revisions:
+            patches = dmp.patch_fromText(textline=revision.diff)
+            text = dmp.patch_apply(patches, text)[0]
+        return text
+
+    @property
+    def latest_revision(self):
+        return PostRevision.query.filter_by(
+            post_id=self.id).order_by(PostRevision.created_on.desc()).first()
 
     @classmethod
     def search(cls, query):
@@ -103,9 +109,16 @@ class Post(ResourceMixin, db.Model):
         if not text or text == '':
             return ''
 
-        paragraphs = text.split('\r\n\r\n')
-        return '\r\n\r\n'.join(paragraphs[:self.preview_paragraphs])
-        #return '%r' % text
+        # First try normal method
+        methods = ['\n\n', '\r\n\r\n']
+        method = None
+        for _method in methods:
+            method = _method
+            paragraphs = text.split(method)
+            if paragraphs.__len__() > 1:
+                break
+
+        return method.join(paragraphs[:self.preview_paragraphs])
 
     @property
     def category(self):
@@ -128,6 +141,20 @@ class Post(ResourceMixin, db.Model):
 
     def __str__(self):
         return self.title
+
+
+class PostRevision(ResourceMixin, db.Model):
+    __tablename__ = 'post_revision'  # plural lower-case
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Relationships.
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+
+    # Details
+    diff = db.Column(db.Text, nullable=False)
+
+    def __str__(self):
+        return '{}: {}'.format(self.post_id, self.created_on)
 
 
 class Category(db.Model):

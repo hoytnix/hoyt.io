@@ -68,7 +68,6 @@ def extensions(app):
         except:
             _admin.add_view(ModelView(model, db.session))
 
-
     # Flask-Misaka
     md.init_app(app)
 
