@@ -5,10 +5,15 @@
   {% set form_kwargs = {} %}
   {% set legend = 'Add a new post' %}
   {% set button = 'Add' %}
-{% else %}
+{% elif request.endpoint.endswith('edit') %}
   {% set endpoint = 'dashboard.posts_edit' %}
   {% set form_kwargs = {'id': post.id} %}
   {% set legend = 'Update this post' %}
+  {% set button = 'Save' %}
+{% else %}
+  {% set endpoint = 'dashboard.posts_revise' %}
+  {% set form_kwargs = {'id': post.id} %}
+  {% set legend = 'Revise this post' %}
   {% set button = 'Save' %}
 {% endif %}
 

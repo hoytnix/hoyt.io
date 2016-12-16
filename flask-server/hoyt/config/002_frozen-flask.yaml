@@ -1,4 +1,4 @@
 FREEZER_DESTINATION: "../../static-server/public"
 FREEZER_IGNORE_MIMETYPE_WARNINGS: True
-FREEZER_ENDPOINT_BLACKLIST: ['admin.', '.ajax_lookup', '.details_view', '.edit_view', '.create_view']
+FREEZER_ENDPOINT_BLACKLIST: ['admin.', '.ajax_lookup', '.details_view', '.edit_view', '.create_view', 'dashboard.']
 FREEZER_URL_BLACKLIST: ['admin/']

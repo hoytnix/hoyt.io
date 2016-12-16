@@ -1,10 +1,11 @@
 from flask import (Blueprint, redirect, request, flash, url_for,
                    render_template)
 from sqlalchemy import text
+from diff_match_patch import diff_match_patch
 
 from .forms import (SearchForm, BulkDeleteForm, PostForm)
 
-from hoyt.blueprints.blog import Post, Category, Tag
+from hoyt.blueprints.blog import Post, Category, Tag, PostRevision
 
 dashboard = Blueprint(
     'dashboard',
@@ -105,3 +106,25 @@ def posts_bulk_delete():
         flash('No posts were deleted, something went wrong.', 'error')
 
     return redirect(url_for('dashboard.posts'))
+
+
+@dashboard.route('/posts/revise/<int:id>', methods=['GET', 'POST'])
+def posts_revise(id):
+    post = Post.query.get(id)
+    form = PostForm(obj=post)
+
+    if form.validate_on_submit():
+        prev_body = post.body
+        body = form.body.data
+
+        dmp = diff_match_patch()
+        patch = dmp.patch_make(a=prev_body, b=body)
+        patch_text = dmp.patch_toText(patch)
+
+        revision = PostRevision(post_id=id, diff=patch_text)
+        revision.save()
+
+        flash('Post has been saved successfully.', 'success')
+        return redirect(url_for('dashboard.posts_revise', id=id))
+
+    return render_template('dashboard/post/revise.jinja2', form=form, post=post)

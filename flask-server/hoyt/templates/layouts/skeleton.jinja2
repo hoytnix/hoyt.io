@@ -33,6 +33,17 @@
 
         <main class="container">
             <div class="md-margin-top">{% block heading %}{% endblock %}</div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
             {% block body %}{% endblock %}
 
             {% block comments %}{% endblock %}

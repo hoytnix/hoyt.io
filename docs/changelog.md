@@ -4,8 +4,8 @@ Changelog
 All notable changes to this project will be documented in this file.
 
 
-v0.0.2
-+ Post revisions are introduced.
+v0.0.2 - Post revisions are introduced.
++ Ability to revise posts from the dashboard.
 
 
 v0.0.1

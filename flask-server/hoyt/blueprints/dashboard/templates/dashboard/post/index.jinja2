@@ -43,15 +43,8 @@
             <th class="col-header">
               {{ items.sort('title') }}
             </th>
-            <th id="bulk_actions" colspan="5">
-              <div class="form-inline">
-                {{ f.field(bulk_form.scope, inline=True) }}
-                <button type="submit"
-                        class="btn btn-danger btn-sm">
-                  Delete items
-                </button>
-              </div>
-            </th>
+            <th class="col-header"><!-- Revise --></th>
+            <th class="col-header"><!-- Edit --></th>
           </tr>
         </thead>
         <tbody>
@@ -65,13 +58,18 @@
             <td>
               <time class="from-now"
                     data-datetime="{{ post.created_on }}">
-                {{ post.created_on }}
+                {% set created_on_s = post.created_on|string %}
+                {{ created_on_s[:16] }}
               </time>
             </td>
             <td>
-                <a href="{{ url_for('dashboard.posts_edit', id=post.id) }}">
-                    {{ post.title }}
-                </a>
+                {{ post.title }}<br/>
+            </td>
+            <td>
+                <a href="{{ url_for('dashboard.posts_revise', id=post.id) }}" class="btn btn-primary">Revise</a>
+            </td>
+            <td>
+                <a href="{{ url_for('dashboard.posts_edit', id=post.id) }}" class="btn btn-primary">Edit</a>
             </td>
           </tr>
         {% endfor %}
