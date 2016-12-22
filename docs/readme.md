@@ -1,6 +1,11 @@
 Readme
 ======
 
+This file will serve as the master file for documentation until I accumulate enough here to move it into individual files.
+
+
+## Automatic Imports
+
 Because of the nature of how iterable-imports (`lib.imports`) are implemented,
 there are a few requirements for building modules:
 
@@ -13,3 +18,16 @@ The latter two sound like a pain and you may ask "Why even bother with iterable-
 
 Well, that's when the module-generator (similar to Ember-CLI) will save a lot of
 time and pain. :-)
+
+
+## "Master" and "Development" Branches
+
+As of this writing there are two primary branches: `master` and `development`.
+
+The `master`-branch is reserved for publishing: there should always be a working version available to make changes to the live website.
+The `development`-branch is essentially for working on the changes before they are finalized.
+
+
+## Using Frozen Flask
+
+For the purposes of this application the API of Frozen Flask has been modified in `lib/freezer.py`. To keep everything consistent, please try to import Freezer like `hoyt.extensions.freezer` when possible. The `freezer` is uninstantiated to prevent circular imports.
