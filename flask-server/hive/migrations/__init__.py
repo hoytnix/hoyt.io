@@ -1,1 +1,1 @@
-"""Database migrations for Hoyt."""
+"""Database migrations for Hive."""

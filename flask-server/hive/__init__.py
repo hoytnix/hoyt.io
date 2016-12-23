@@ -1,4 +1,4 @@
-"""Package for Hoyt."""
+"""Package for Hive."""
 
 __project__ = 'Hive'
 __version__ = '0.0.2'

@@ -9,7 +9,7 @@
 # - napoleon : API documentation generation.
 
 # Project settings
-PROJECT := Hoyt.IO
+PROJECT := hoyt.io
 PACKAGE := flask-server/hive
 REPOSITORY := hoytnix/hoyt.io
 PACKAGES := $(PACKAGE) flask-server/tests
