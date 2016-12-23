@@ -6,7 +6,7 @@ import sys
 
 import setuptools
 
-PACKAGE_NAME = 'hoyt'
+PACKAGE_NAME = 'hive'
 MINIMUM_PYTHON_VERSION = 3, 5
 
 
@@ -52,7 +52,7 @@ setuptools.setup(
     author='Michael Hoyt',
     author_email='base64(aG95dC5uaXhAZ21haWwuY29t)',
     packages=setuptools.find_packages(),
-    entry_points={'console_scripts': ['hoyt = cli.cli:cli']},
+    entry_points={'console_scripts': ['hive = cli.cli:cli']},
     long_description=read_descriptions(),
     license='GPLv3',
     classifiers=[

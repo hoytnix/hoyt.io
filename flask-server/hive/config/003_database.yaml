@@ -1,0 +1,2 @@
+SQLALCHEMY_DATABASE_URI: 'postgresql://postgres@postgres:5432/drones'
+SQLALCHEMY_TRACK_MODIFICATIONS: False

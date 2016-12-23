@@ -1,7 +1,7 @@
 import click
 
-from hoyt.extensions import Freezer
-from hoyt.app import create_app
+from hive.extensions import Freezer
+from hive.app import create_app
 
 
 @click.command()

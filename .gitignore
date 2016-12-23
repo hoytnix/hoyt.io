@@ -5,7 +5,7 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
-flask-server/hoyt/blueprints/blog/posts
+flask-server/hive/blueprints/blog/posts
 
 #
 # static server
@@ -13,8 +13,8 @@ flask-server/hoyt/blueprints/blog/posts
 
 static-server/node_modules/
 static-server/public/
-flask-server/hoyt/static/font
-flask-server/hoyt/static/fontello
+flask-server/hive/static/font
+flask-server/hive/static/fontello
 
 #
 # continuous integration

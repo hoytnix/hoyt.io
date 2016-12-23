@@ -1,6 +1,6 @@
 import click
 
-from hoyt.app import create_app
+from hive.app import create_app
 
 app = create_app()
 

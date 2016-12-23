@@ -7,7 +7,7 @@ from sqlalchemy import or_
 from flask_admin.contrib.sqla import ModelView
 from diff_match_patch import diff_match_patch
 
-from hoyt.extensions import db
+from hive.extensions import db
 from lib.urls import slugify
 from lib.util_sqlalchemy import ResourceMixin
 

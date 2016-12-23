@@ -3,9 +3,9 @@ import click
 from sqlalchemy_utils import database_exists, create_database
 from diff_match_patch import diff_match_patch
 
-from hoyt.app import create_app
-from hoyt.extensions import db
-from hoyt.blueprints.blog import Post, PostRevision
+from hive.app import create_app
+from hive.extensions import db
+from hive.blueprints.blog import Post, PostRevision
 
 # Create an app context for the database connection.
 app = create_app()

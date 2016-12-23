@@ -10,7 +10,7 @@
 
 # Project settings
 PROJECT := Hoyt.IO
-PACKAGE := flask-server/hoyt
+PACKAGE := flask-server/hive
 REPOSITORY := hoytnix/hoyt.io
 PACKAGES := $(PACKAGE) flask-server/tests
 CONFIG := $(shell ls flask-server/*.py)
@@ -67,7 +67,7 @@ endif
 PYTHON := $(BIN_)python
 PIP := $(BIN_)pip
 EASY_INSTALL := $(BIN_)easy_install
-HOYT := $(BIN_)hoyt
+HIVE := $(BIN_)hive
 
 SNIFFER := $(BIN_)sniffer
 HONCHO := $(ACTIVATE) && $(BIN_)honcho
@@ -87,7 +87,7 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run ## Start the program
 run: install
-	cd flask-server && $(HOYT) run
+	cd flask-server && $(HIVE) run
 
 .PHONY: run_db ## Start the database
 run_db:
@@ -96,13 +96,13 @@ run_db:
 
 .PHONY: backup_db
 backup_db:
-	pg_dump -h localhost -p 5432 -U postgres -d hoyt -w --data-only --inserts -f database/backup.sql
+	pg_dump -h localhost -p 5432 -U postgres -d drones -w --data-only --inserts -f database/backup.sql
 
 .PHONY: compile
 compile:
 	@ echo "Nothing will happen if localhost:5000 isn't available."
 	@ grep -q '200 OK' <<< $$(curl -Is http://localhost:5000 | head -1)
-	cd flask-server && $(HOYT) freeze -e publish
+	cd flask-server && $(HIVE) freeze -e publish
 	cd static-server && grunt
 
 .PHONY: serve

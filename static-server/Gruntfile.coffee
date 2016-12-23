@@ -90,7 +90,7 @@ module.exports = (grunt) ->
             build:
                 files: [{
                     expand: true,
-                    cwd: '../flask/hoyt/static'
+                    cwd: '../flask-server/hive/static'
                     src: ['**', '!**/*.css']
                     dest: 'public/static'
                 }]
@@ -99,8 +99,8 @@ module.exports = (grunt) ->
             build:
                 options:
                     config: 'fontello.json'
-                    fonts: '../flask/hoyt/static/font'
-                    styles: '../flask/hoyt/static/fontello'
+                    fonts: '../flask-server/hive/static/font'
+                    styles: '../flask-server/hive/static/fontello'
                     scss: false
                     force: true
 

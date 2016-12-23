@@ -7,8 +7,8 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config
 
-from hoyt.app import create_app
-from hoyt.extensions import db
+from hive.app import create_app
+from hive.extensions import db
 
 app = create_app()
 

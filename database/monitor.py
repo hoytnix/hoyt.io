@@ -7,7 +7,7 @@ import psycopg2
 CONFIG = {
     'host': 'localhost',
     'port': '5432',
-    'dbname': 'hoyt',
+    'dbname': 'drones',
     'user': 'postgres'
 }
 

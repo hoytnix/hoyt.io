@@ -11,7 +11,7 @@ there are a few requirements for building modules:
 
 *   The top-level init-file next to `app.py` must import blueprints.
     (Which is easy enough to commit to Git and re-use with relative-imports.)
-*   The blueprints-module (`hoyt.blueprints`) must import its sub-modules.
+*   The blueprints-module (`hive.blueprints`) must import its sub-modules.
 *   Blueprint sub-modules must import their view-blueprints and all models.
 
 The latter two sound like a pain and you may ask "Why even bother with iterable-imports when they don't seem to be saving you any work?"
@@ -30,4 +30,4 @@ The `development`-branch is essentially for working on the changes before they a
 
 ## Using Frozen Flask
 
-For the purposes of this application the API of Frozen Flask has been modified in `lib/freezer.py`. To keep everything consistent, please try to import Freezer like `hoyt.extensions.freezer` when possible. The `freezer` is uninstantiated to prevent circular imports.
+For the purposes of this application the API of Frozen Flask has been modified in `lib/freezer.py`. To keep everything consistent, please try to import Freezer like `hive.extensions.freezer` when possible. The `freezer` is uninstantiated to prevent circular imports.

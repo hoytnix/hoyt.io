@@ -5,7 +5,7 @@ from diff_match_patch import diff_match_patch
 
 from .forms import (SearchForm, BulkDeleteForm, PostForm)
 
-from hoyt.blueprints.blog import Post, Category, Tag, PostRevision
+from hive.blueprints.blog import Post, Category, Tag, PostRevision
 
 dashboard = Blueprint(
     'dashboard',

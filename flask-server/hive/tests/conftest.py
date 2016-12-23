@@ -1,7 +1,7 @@
 import pytest
 
-from hoyt.app import create_app
-from hoyt.extensions import db as _db
+from hive.app import create_app
+from hive.extensions import db as _db
 
 
 @pytest.yield_fixture(scope='session')
@@ -11,7 +11,7 @@ def app():
 
     :return: Flask app
     """
-    db_uri = 'postgresql://postgres@postgres:5432/test_hoyt'
+    db_uri = 'postgresql://postgres@postgres:5432/test_drones'
     params = {
         'DEBUG': False,
         'TESTING': True,
