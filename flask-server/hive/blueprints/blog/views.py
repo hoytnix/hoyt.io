@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, abort
 
-from .models import Post, Category, Tag
+from .models.post import Post
+from .models.category import Category
+from .models.tag import Tag
+from .models.post_revision import PostRevision
 
 blog = Blueprint(
     'blog', __name__, template_folder='templates', url_prefix='/blog')

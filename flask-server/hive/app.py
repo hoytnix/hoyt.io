@@ -86,7 +86,7 @@ def template_processors(app):
     from lib import current_year
     from lib.urls import canonical_url_for, canonical_request_url
     from hive.blueprints.page.models import Attribute, LastModified
-    from hive.blueprints.blog.models import Tag
+    from hive.blueprints.blog.models.tag import Tag
 
     app.jinja_env.globals.update(current_year=current_year)
     app.jinja_env.globals.update(canonical_url_for=canonical_url_for)

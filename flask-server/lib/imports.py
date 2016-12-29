@@ -1,18 +1,39 @@
 """Because writing imports is redundant."""
 
-import importlib
 import inspect
 
 
-def all_models():
+def all_models(blueprint=None, caller=None):
     """A list of model-class objects."""
 
-    namespace = __import__('hive').blueprints
+    project = 'hive'
+    namespace = __import__(project)
 
-    modules = []
+    blueprints = None
     for name, obj in inspect.getmembers(namespace):
         if inspect.ismodule(obj):
-            modules.append(obj)
+            if caller == 'auto-importer':
+                print(obj)
+            if "module '{}.blueprints' from".format(project) in '%r' % obj:
+                blueprints = obj
+
+    if blueprints == None:
+        print('no blueprints: ' + caller)
+
+    modules = []
+    for name, obj in inspect.getmembers(blueprints):
+        if inspect.ismodule(obj):
+            if blueprint:
+                obj_path = ('%r' % obj).split(' ')[1]
+                obj_name = obj_path.split('.')[-1][:-1] # remove trailing `'`
+                if blueprint == obj_name:
+                    modules.append(obj)
+            else:
+                modules.append(obj)
+
+    if blueprint:
+        if modules.__len__() == 0:
+            return None # Do not continue.
 
     classes = []
     for module in modules:
@@ -35,10 +56,17 @@ def all_models():
 def all_blueprints():
     """A list of Blueprint objects."""
 
-    namespace = __import__('hive').blueprints
+    project = 'hive'
+    namespace = __import__(project)
+
+    blueprints = None
+    for name, obj in inspect.getmembers(namespace):
+        if inspect.ismodule(obj):
+            if "module '{}.blueprints'".format(project) in '%r' % obj:
+                blueprints = obj
 
     modules = []
-    for name, obj in inspect.getmembers(namespace):
+    for name, obj in inspect.getmembers(blueprints):
         if inspect.ismodule(obj):
             modules.append(obj)
 

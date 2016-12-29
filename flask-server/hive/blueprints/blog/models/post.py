@@ -1,20 +1,14 @@
-import os
-import datetime
-
-import pytz
 from flask import url_for
 from sqlalchemy import or_
 from flask_admin.contrib.sqla import ModelView
 from diff_match_patch import diff_match_patch
 
+from .post_revision import PostRevision
+from ..tables import tags
+
 from hive.extensions import db
 from lib.urls import slugify
 from lib.util_sqlalchemy import ResourceMixin
-
-# Many-to-many relationships.
-tags = db.Table('tags',
-                db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-                db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
 
 
 class Post(ResourceMixin, db.Model):
@@ -134,100 +128,6 @@ class Post(ResourceMixin, db.Model):
             'blog.post_detail',
             category_slug=self.category.slug,
             post_slug=self.slug)
-
-    @property
-    def slug(self):
-        return slugify(self.title)
-
-    def __str__(self):
-        return self.title
-
-
-class PostRevision(ResourceMixin, db.Model):
-    __tablename__ = 'post_revision'  # plural lower-case
-    id = db.Column(db.Integer, primary_key=True)
-
-    # Relationships.
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
-
-    # Details
-    diff = db.Column(db.Text, nullable=False)
-
-    def __str__(self):
-        return '{}: {}'.format(self.post_id, self.created_on)
-
-
-class Category(db.Model):
-    __tablename__ = 'categories'  # plural lower-case
-    id = db.Column(db.Integer, primary_key=True)
-
-    # Relationships.
-    posts = db.relationship('Post', backref='category', lazy='dynamic')
-
-    # Details
-    title = db.Column(db.String(128), nullable=False)
-
-    @property
-    def most_recent_posts(self):
-        return Post.query.filter_by(category_id=self.id) \
-                        .filter_by(is_published=True) \
-                        .order_by(Post.created_on.desc()).all()
-
-    @property
-    def href(self):
-        return '<a href="{}">{}</a>'.format(self.url_for, self.title)
-
-    @property
-    def url_for(self):
-        return url_for('blog.category_detail', slug=self.slug)
-
-    @property
-    def slug(self):
-        return slugify(self.title)
-
-    def __str__(self):
-        return self.title
-
-
-class Tag(db.Model):
-    #__tablename__ = 'tags'  # plural lower-case
-    id = db.Column(db.Integer, primary_key=True)
-
-    # Details
-    title = db.Column(db.String(128), nullable=False)
-
-    @classmethod
-    def tag_cloud(cls):
-        count = {}
-        posts = Post.query.all()
-        for post in posts:
-            tags = post.tags
-            for tag in tags:
-                if tag not in count:
-                    count[tag] = 1
-                else:
-                    count[tag] += 1
-
-        return sorted(
-            [{
-                "tag": tag,
-                "count": count[tag]
-            } for tag in count],
-            key=lambda k: k['tag'].title)
-
-    @property
-    def most_recent_posts(self):
-        return Post.query.filter(Post.tags.any(Tag.title == self.title)) \
-                        .filter_by(is_published=True) \
-                        .order_by(Post.created_on.desc()).all()
-
-    @property
-    def href(self):
-        return '<a href="{}">{}</a>'.format(self.url_for, self.title)
-
-    @property
-    def url_for(self):
-        return url_for('blog.tag_detail', slug=self.slug)
 
     @property
     def slug(self):

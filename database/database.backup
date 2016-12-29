@@ -1,0 +1,725 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.4
+-- Dumped by pg_dump version 9.6.1
+
+-- Started on 2016-12-22 20:06:38 EST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 12361)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2184 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 192 (class 1259 OID 16501)
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE alembic_version OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 16406)
+-- Name: attributes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE attributes (
+    id integer NOT NULL,
+    request text NOT NULL,
+    key text NOT NULL,
+    value text NOT NULL
+);
+
+
+ALTER TABLE attributes OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 16404)
+-- Name: attributes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE attributes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE attributes_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2185 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: attributes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE attributes_id_seq OWNED BY attributes.id;
+
+
+--
+-- TOC entry 182 (class 1259 OID 16390)
+-- Name: categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE categories (
+    id integer NOT NULL,
+    title character varying(128) NOT NULL
+);
+
+
+ALTER TABLE categories OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 16388)
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE categories_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2186 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
+
+
+--
+-- TOC entry 188 (class 1259 OID 16417)
+-- Name: pages_last_modified; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE pages_last_modified (
+    created_on timestamp with time zone,
+    updated_on timestamp with time zone,
+    id integer NOT NULL,
+    request text NOT NULL,
+    checksum text
+);
+
+
+ALTER TABLE pages_last_modified OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 16415)
+-- Name: pages_last_modified_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE pages_last_modified_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pages_last_modified_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2187 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: pages_last_modified_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE pages_last_modified_id_seq OWNED BY pages_last_modified.id;
+
+
+--
+-- TOC entry 194 (class 1259 OID 16506)
+-- Name: post_revision; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE post_revision (
+    created_on timestamp with time zone,
+    updated_on timestamp with time zone,
+    id integer NOT NULL,
+    post_id integer,
+    diff text NOT NULL
+);
+
+
+ALTER TABLE post_revision OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 16504)
+-- Name: post_revision_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE post_revision_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE post_revision_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2188 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: post_revision_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE post_revision_id_seq OWNED BY post_revision.id;
+
+
+--
+-- TOC entry 190 (class 1259 OID 16428)
+-- Name: posts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE posts (
+    created_on timestamp with time zone,
+    updated_on timestamp with time zone,
+    id integer NOT NULL,
+    category_id integer,
+    title character varying(128),
+    comments_enabled boolean,
+    is_published boolean,
+    preview_paragraphs integer,
+    file_hash character varying(128)
+);
+
+
+ALTER TABLE posts OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 16426)
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE posts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE posts_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2189 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE posts_id_seq OWNED BY posts.id;
+
+
+--
+-- TOC entry 184 (class 1259 OID 16398)
+-- Name: tag; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tag (
+    id integer NOT NULL,
+    title character varying(128) NOT NULL
+);
+
+
+ALTER TABLE tag OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 16396)
+-- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tag_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2190 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tag_id_seq OWNED BY tag.id;
+
+
+--
+-- TOC entry 191 (class 1259 OID 16442)
+-- Name: tags; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tags (
+    tag_id integer,
+    post_id integer
+);
+
+
+ALTER TABLE tags OWNER TO postgres;
+
+--
+-- TOC entry 2029 (class 2604 OID 16409)
+-- Name: attributes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY attributes ALTER COLUMN id SET DEFAULT nextval('attributes_id_seq'::regclass);
+
+
+--
+-- TOC entry 2027 (class 2604 OID 16393)
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_seq'::regclass);
+
+
+--
+-- TOC entry 2030 (class 2604 OID 16420)
+-- Name: pages_last_modified id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pages_last_modified ALTER COLUMN id SET DEFAULT nextval('pages_last_modified_id_seq'::regclass);
+
+
+--
+-- TOC entry 2032 (class 2604 OID 16509)
+-- Name: post_revision id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY post_revision ALTER COLUMN id SET DEFAULT nextval('post_revision_id_seq'::regclass);
+
+
+--
+-- TOC entry 2031 (class 2604 OID 16431)
+-- Name: posts id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY posts ALTER COLUMN id SET DEFAULT nextval('posts_id_seq'::regclass);
+
+
+--
+-- TOC entry 2028 (class 2604 OID 16401)
+-- Name: tag id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tag ALTER COLUMN id SET DEFAULT nextval('tag_id_seq'::regclass);
+
+
+--
+-- TOC entry 2174 (class 0 OID 16501)
+-- Dependencies: 192
+-- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO alembic_version (version_num) VALUES ('65550618f1d9');
+
+
+--
+-- TOC entry 2168 (class 0 OID 16406)
+-- Dependencies: 186
+-- Data for Name: attributes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2191 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: attributes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('attributes_id_seq', 7, true);
+
+
+--
+-- TOC entry 2164 (class 0 OID 16390)
+-- Dependencies: 182
+-- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO categories (id, title) VALUES (4, 'Meta');
+INSERT INTO categories (id, title) VALUES (5, 'Software');
+INSERT INTO categories (id, title) VALUES (6, 'Goals');
+
+
+--
+-- TOC entry 2192 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('categories_id_seq', 6, true);
+
+
+--
+-- TOC entry 2170 (class 0 OID 16417)
+-- Dependencies: 188
+-- Data for Name: pages_last_modified; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.752123+00', '2016-12-11 02:08:59.68803+00', 133, '/blog/meta/hello-world-/', '73d041eac772bda31f738f4af3e7ddfb');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:06:59.220162+00', '2016-12-16 02:48:09.209456+00', 114, '/', 'fb78116d7f659590805baac9947e3022');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.188715+00', '2016-12-11 02:06:50.937625+00', 125, '/blog/goals/', '65e42dfdf551d42fb25f84959951f1c1');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:27.842036+00', '2016-11-28 01:23:27.842055+00', 122, '/dashboard/posts/new', NULL);
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:05:45.812965+00', '2016-11-28 01:08:36.475+00', 111, '/admin/category/new/', 'bfafbe6c40d5b2637e8c7b39eaf2904b');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:05:44.476358+00', '2016-11-28 01:08:36.528078+00', 110, '/admin/category/', '1ceb6dfd59117be0b7c6f156db624bb9');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:06:57.100537+00', '2016-12-16 02:06:57.143877+00', 175, '/dashboard', '5a9c162f81d90fc2a783de0e4cf3dc20');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:07:02.848575+00', '2016-12-16 02:48:10.770659+00', 115, '/blog/', '70be26f964fc98304a0a8af7c0e474e0');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-11 00:45:55.610174+00', '2016-12-11 00:45:55.623526+00', 172, '/admin/tag/edit/', '71dc443414183e96c82f91b222220ec7');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-11 02:06:51.009922+00', '2016-12-11 02:06:51.040106+00', 174, '/blog/tag/gtd/', '27a67f69acbc793ef24f877001fba3e5');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:11:56.720424+00', '2016-12-11 02:06:51.272708+00', 117, '/blog/goals/week-0-the-beginning-and-the-end/', '4b8f3992da652bd796138d124e0905e1');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.327589+00', '2016-12-11 02:06:51.311158+00', 127, '/blog/software/', '3fd95910f32407492e76452f2ffe5e13');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.38757+00', '2016-12-11 02:06:51.3786+00', 128, '/blog/tag/desktop/', '0d206926fd6ff467adf269ddbf9453d9');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-29 18:39:14.682747+00', '2016-11-29 18:39:14.747897+00', 135, '/static/script/rich-text-editor.js', 'ca783981d8cff646eececb652f636a3b');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-11 01:50:22.952292+00', '2016-12-16 02:48:16.656497+00', 173, '/blog/goals/week-1-procrastination/', 'aeb1e251c41c0f99433dba6c151d1753');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.451751+00', '2016-12-11 02:06:51.42319+00', 129, '/blog/tag/linux/', '36bc239559f2be7edc5d559520480ebe');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:48:39.747203+00', '2016-12-16 02:48:39.773929+00', 181, '/dashboard/posts/revise/4', '0490605ab183b3e7a7197c2f74523d06');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.617253+00', '2016-12-11 02:06:51.546862+00', 131, '/blog/meta/', 'f5ac3da65595f692a4daff881d2bbc15');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:05:38.309384+00', '2016-11-28 01:05:38.324598+00', 107, '/admin', '9b9e46baefa619c883248eaf4b3e67bf');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.687242+00', '2016-12-11 02:06:51.607304+00', 132, '/blog/tag/weblog/', '15f7d6d76fe93596d4ca7237e3cefef6');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:05:38.744291+00', '2016-11-28 01:05:38.75618+00', 109, '/favicon.ico', 'ca783981d8cff646eececb652f636a3b');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:33.386123+00', '2016-11-28 01:23:33.405204+00', 134, '/blog', '80e3b756ec050944f996090f80bb3b21');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.56622+00', '2016-12-11 02:06:51.678342+00', 130, '/blog/meta/lorem-ipsum/', '50fc86d7cb2fcd029e79d554ca41c279');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:48:44.737276+00', '2016-12-16 02:48:44.75587+00', 182, '/dashboard/posts/revise/3', 'd43f6d37437ac43a2be0e9a2b863d486');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:48:47.626024+00', '2016-12-16 02:48:47.633802+00', 183, '/dashboard/posts/revise/2', '8f96de6c925b23be8a56029b5a562528');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:05:38.432058+00', '2016-12-11 01:16:17.545865+00', 108, '/admin/', '39823a1db41c2ff6c51f549e404de23b');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:48:50.488506+00', '2016-12-16 02:48:50.501843+00', 184, '/dashboard/posts/revise/1', '8197d6336f6400294acd064ff522bfb6');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:07:04.53827+00', '2016-12-16 02:14:01.20039+00', 177, '/dashboard/posts/edit/5', 'ad2c60176581cc9d28802a3b0d4af9e6');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:05:59.293834+00', '2016-12-09 03:30:26.862881+00', 113, '/admin/post/new/', '70a222b460b07d23ba1f3be75af379e7');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:10:34.696717+00', '2016-12-11 01:51:04.464187+00', 116, '/admin/post/edit/', '9efcb940e76fe61efeb3bad43e033774');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:44:38.857207+00', '2016-12-16 02:44:38.869618+00', 179, '/dashboard/posts/', 'ca783981d8cff646eececb652f636a3b');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-10 23:26:52.071913+00', '2016-12-11 01:52:49.397304+00', 168, '/admin/lastmodified/', 'dfab272449a27dfc62fe89316aca0703');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-10 23:26:54.806995+00', '2016-12-10 23:26:54.823803+00', 169, '/admin/attribute/', 'e58a9e84dedd1f92fb1d0c01851b0c1f');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-11 00:43:35.626762+00', '2016-12-11 01:52:54.146346+00', 171, '/admin/postrevision/edit/', '83b1c253554c3f10589950f963cd37ba');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:27.893547+00', '2016-12-16 02:44:45.869053+00', 124, '/dashboard/', '75bbe52926d76ba50fabbe9dc778f5b0');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:05:57.90748+00', '2016-12-16 02:46:45.884018+00', 112, '/admin/post/', '8d63c57cff8cf116a2fe5982e27191c4');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:27.885376+00', '2016-12-11 02:08:57.688557+00', 123, '/sitemap.xml', '55d45fef3c54a6951507edf3960bae4e');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:13:34.896537+00', '2016-12-11 01:56:34.502793+00', 119, '/admin/tag/new/', 'c3a265d5e761e49fe66ce6e532c9decf');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:13:33.794001+00', '2016-12-11 01:56:34.575515+00', 118, '/admin/tag/', 'b3759507457f43c3cb6f1edd1e337f1f');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:47:07.262876+00', '2016-12-16 02:47:07.273236+00', 180, '/admin/postrevision/delete/', '1ec5e9d4e9f09a0832c2a26fa9e6a2d8');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-10 23:29:41.560235+00', '2016-12-16 02:47:07.346884+00', 170, '/admin/postrevision/', '83a3953222c254b830dd8dc73ba9fdd1');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:27.70007+00', '2016-12-11 02:06:50.490831+00', 120, '/policy/privacy/', '26010d289312f5f18638c238eebadd12');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:27.75933+00', '2016-12-11 02:06:50.536408+00', 121, '/policy/terms/', '6a867d8cc1850e93e6830bda1c0aee23');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:10:43.28511+00', '2016-12-16 02:57:53.498986+00', 178, '/dashboard/posts/revise/5', '427a2ba36cac03987a076a3359339af7');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-11-28 01:23:28.278604+00', '2016-12-11 02:08:59.633847+00', 126, '/blog/software/youtube-dl/', '64a6e4e2f3707e70b9d6c1956be95b63');
+INSERT INTO pages_last_modified (created_on, updated_on, id, request, checksum) VALUES ('2016-12-16 02:07:01.650377+00', '2016-12-16 02:58:07.748582+00', 176, '/dashboard/posts', '2fc111f05f7dfca131c747b3bbafdb8d');
+
+
+--
+-- TOC entry 2193 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: pages_last_modified_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pages_last_modified_id_seq', 184, true);
+
+
+--
+-- TOC entry 2176 (class 0 OID 16506)
+-- Dependencies: 194
+-- Data for Name: post_revision; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO post_revision (created_on, updated_on, id, post_id, diff) VALUES ('2016-11-28 01:06:29.160848+00', '2016-12-11 00:43:07.343804+00', 1, 1, '@@ -0,0 +1,1945 @@
++Hey! This is my first post at my blog.%0D%0A%0D%0AThis blog will be used for exploring how I develop software applications, documenting my discoveries, and sharing them with interested parties.%0D%0A%0D%0AYou may be interested to know that the source-code for this post looks a little like this!%0D%0A%0D%0A%60%60%60%0D%0A%7B%25 block body %25%7D%0D%0A    %7B%7B post.body%7Cmarkdown %7D%7D%0D%0A%7B%25 endblock %25%7D%0D%0A%60%60%60%0D%0A%0D%0AThat''s a lot accomplished for three little lines. :)%0D%0A%0D%0AThis is real Python code:%0D%0A%0D%0A%60%60%60%0D%0Aimport os%0D%0Aimport datetime%0D%0Aimport hashlib%0D%0A%0D%0Aimport pytz%0D%0Afrom flask import Markup, url_for%0D%0A%0D%0Afrom hoyt.extensions import db%0D%0Afrom lib.urls import slugify%0D%0Afrom lib.util_sqlalchemy import ResourceMixin, AwareDateTime%0D%0A%0D%0A%0D%0Aclass Post(ResourceMixin, db.Model):%0D%0A    __tablename__ = ''posts''    # plural lower-case%0D%0A    id = db.Column(db.Integer, primary_key=True)%0D%0A%0D%0A    # Relationships.%0D%0A    category_id = db.Column(db.Integer, db.ForeignKey(''categories.id''))%0D%0A%0D%0A    # Details%0D%0A    title = db.Column(db.String(128))%0D%0A    comments_enabled = db.Column(db.Boolean, default=True)%0D%0A    preview_paragraphs = db.Column(db.Integer, default=2)%0D%0A    file_hash = db.Column(db.String(128))%0D%0A%0D%0A    @property%0D%0A    def body(self):%0D%0A        cd = os.path.dirname(os.path.abspath(__file__))%0D%0A        posts_dir = os.path.join(cd, ''posts'')%0D%0A%0D%0A        file_name = ''%7B%7D-%7B%7D.md''.format(self.id, self.slug)%0D%0A        fp = os.path.join(posts_dir, file_name)%0D%0A%0D%0A        if not os.path.exists(fp):%0D%0A            with open(fp, ''w+'') as stream:%0D%0A                pass%0D%0A            return ''''%0D%0A        else:%0D%0A            with open(fp, ''r'') as stream:%0D%0A                text = stream.read()%0D%0A%0D%0A        h = hashlib.new(''sha512'')%0D%0A        h.update(text.encode(''utf-8'',errors=''ignore''))%0D%0A        hash_sum = h.hexdigest()%0D%0A%0D%0A        if hash_sum != self.file_hash:%0D%0A            self.file_hash = hash_sum%0D%0A            self.updated_on = datetime.datetime.now(pytz.utc)%0D%0A            self.save()%0D%0A%0D%0A        return text%0D%0A%60%60%60%0D%0A%0D%0ACheers, Michael.
+');
+INSERT INTO post_revision (created_on, updated_on, id, post_id, diff) VALUES ('2016-11-28 01:06:55.345901+00', '2016-12-11 00:43:07.366723+00', 2, 2, '@@ -0,0 +1,1792 @@
++Lorem markdownum quia Apollineos ei cuius numquam, ubi actis ac! Faveas est%0D%0Aiustamque ne dedisse in aquis fratres credere saepe per modo nux vale arbore%0D%0Ademens, iussae. Vita tenus feruntur urbem adfusaque maius. Nec stabat veluti;%0D%0Aauras deos aurum erat signa ante.%0D%0A%0D%0A%3E Athamantis memor peraguntque, ego non luminis fusis est fidem dextra Macareida%0D%0A%3E quamquam. Est ut **priore** adversum pectore quaesitae altera, quaeque,%0D%0A%3E barbaricoque.%0D%0A%0D%0AQuod formatus demittere cum, Desierat, per levius iuvenis, ut eodem totiens in%0D%0Asecum terrae obstitit *differtis sternitur*. Vagantes amore.%0D%0A%0D%0A## Freta quos soletur malorum%0D%0A%0D%0AIn dure mergis Pasiphaen esset singultuque abire trepidare famem sanguine. Sed%0D%0Alasso sistraque non iactu Vestae, ut multa militiam. Cancri in ille, o pectine%0D%0AThisbes bacchae seque caperet, mota c precari veris, meo. Agmine hoc unum%0D%0Adeducere eurus: sine timeto armiger somno abeunt Centaurorum ausus dixere aera%0D%0Anumerare. Est est movet mille numen *dolentem* coepta, insilit tamen **templi**%0D%0APindo.%0D%0A%0D%0A    var usb_box = mashup.schema_storage(ugc(bootClickRouter, memoryHard *%0D%0A            exifAccess, zif), onCompileVga, vci_direct * sectorLogicProtocol);%0D%0A    terminal = acl + cpuDesign + icf_insertion_commercial + 3;%0D%0A    var virus_sdsl = cloud.hsf_menu(-5, cmyk_card);%0D%0A%0D%0AIn arva parvoque venerat Musa qui pomi; sepulcrum promissa sitientes coniunx%0D%0Amoveret si tellus fauces proelia utraque. Phorcidas cingentibus tectus. Flumina%0D%0Afiguris chlamydem passim tenuit omnique rustica; sed ibat. %5BFistula%0D%0Anostrumque%5D(http://decoro.org/crinales-pectora) sede, liquor gravis sperataque%0D%0Aauro precando nova pulvinaribus Ilios et epulis ventis **te**.%0D%0A%0D%0AMarte coruscis tum: paludem pars nec novas versat duo luxit rastroque iam, ne%0D%0Aconiunx primus. Oras tanto equidem.
+');
+INSERT INTO post_revision (created_on, updated_on, id, post_id, diff) VALUES ('2016-11-28 01:10:20.138081+00', '2016-12-11 00:43:07.367548+00', 3, 3, '@@ -0,0 +1,2000 @@
++I found 143 options in youtube-dl:%0D%0A%0D%0A%60%60%60python%0D%0Acount = 0%0D%0Awith open(''args.txt'', ''r'') as stream:%0D%0A    for line in stream:%0D%0A        if line%5B0%5D == ''-'':%0D%0A            count += 1%0D%0Aprint(count)%0D%0A%60%60%60%0D%0A%0D%0ALooking at some of the options in the %22Video Selection%22-section of the arguments, it actually looks like I could be used for a crawler/scraper.%0D%0A%0D%0AHowever, I have never used it like that. In the past I''ve used youtube-dl to download conference recordings (such as %5BPython 3 Metaprogramming%5D(https://www.youtube.com/watch?v=sPiWg5jSoZI) or %5BDjango in Depth%5D(https://www.youtube.com/watch?v=tkwZ1jG3XgA)); to download %5BMIT OpenCourseWare%5D(https://www.youtube.com/user/MIT) videos which aren''t available for torrent on the %5BInternet Archive%5D(https://archive.org/details/mit_ocw); and even to preserve audio recordings from albums which are no longer available from purchase, or at least able to be found for purchase via a Google search, such as this %5Bworship CD by Heidi Baker and Kimberly Rivera%5D(https://www.youtube.com/watch?v=jwGQKsvSx5c).%0D%0A%0D%0AThe main arguments for youtube-dl are the default (which is none but the URL of the video you wish to download) and %60-x%60 which cuts the audio from the video. youtube-dl always provides me with great formats: _m4a_, _ogg_, _webm_, and _opus_ are pretty common for me. If you aren''t familiar with these, they can be _much_ better performing codecs than _mp3_ or _mp4_. I always get the best quality, compared to some %22youtube downloader%22 website you could find on Google; and if I need a specific format, such as for an _mp3 player_, then I can use the Unix %60soundconverter%60 program to convert them.%0D%0A%0D%0AAll-in-all, youtube-dl is a great little piece of software with a lot of functionality and options to help you get done whatever you need; plus the author %5Bdoes not support piracy%5D(https://github.com/rg3/youtube-dl/blob/master/README.md#can-you-add-support-for-this-anime-video-site-or-site-which-shows-current-movies-for-free), which is awesome.%0D%0A%0D%0ACheers.
+');
+INSERT INTO post_revision (created_on, updated_on, id, post_id, diff) VALUES ('2016-11-28 01:11:42.685688+00', '2016-12-11 00:43:07.368392+00', 4, 4, '@@ -0,0 +1,1538 @@
++Week 0: the beginning of my journey, and, _I pray_, the end of myself; a memoir.%0D%0A%0D%0AA few weeks ago I began using %5BHabitica%5D(TODO) to track my habits. For the most part, I just needed a single place to keep all my personal instructions, so I wouldn''t forget what I was working on. Before months would go by before I remembered that I used to want to floss or practice %5Boil pulling%5D(http://www.webmd.com/oral-health/features/oil-pulling). Now everything is conveniently together, with functionality to keep me accountable.%0D%0A%0D%0AThis past week while I was praying, the Lord told me to journal the amount of time I spent stretching, praying, and reading the Word. I believe it was either that day or the next that I read a suggestion on the %5BHabitica Wiki%5D(http://habitica.wikia.com/wiki/Habitica_Wiki) to use %5BToggl%5D(https://toggl.com/): a time-management tool, which mostly seems to be for freelancers to calculate billable-time. Nonetheless, it seemed like a sign from Heaven to what I was just told.%0D%0A%0D%0ASo now I''m nearly reaching streaks in the double-digits, tracking my time, and some time I''d like to check out this %5B%22Pomodoro%22%5D(https://en.wikipedia.org/wiki/Pomodoro_Technique)-thing; time _is_ money.%0D%0A%0D%0ABut more importantly, I would like to take this opportunity to develop my relationships with my friends and family, get out of the house, make an impact on society and my community, and bless myself with exponential spiritual growth.%0D%0A%0D%0ASo keep subscribed if you''re interested in seeing the Lord Jesus Christ make and break me. :)
+');
+INSERT INTO post_revision (created_on, updated_on, id, post_id, diff) VALUES ('2016-12-11 01:55:08.100175+00', '2016-12-11 01:55:08.101272+00', 5, 5, '@@ -0,0 +1,4171 @@
++Week one was probably a few weeks ago: actually, only _almost_ two.%0A%0AI''ve learned a few things since then though:%0A%0A+ %5BTodoist%5D(https://todoist.com/) has been a better tool for me than Habitica.%0A%0AWhile using Habitica on Android and the web-client I was usually playing with the features. I also didn''t like that unlike the web-version, I wasn''t able to hide my completed dailies on Android: something that''s automatic on Todoist. Also, the concrete concepts of GTD built-in to Todoist caused me to research it %5B%5BGTD in 15 minutes%5D%5D(https://hamberg.no/gtd/), which I''m thankful I did because I believe understanding the underlying concepts of brain-dumping and scheduling have helped me to improve my workflow.%0A%0A+ **Dailies aren''t fun**: _especially if they aren''t something that I can immediately see the benefits to_.%0A%0AI found that tasks which I can see immediate benefit from, such as brushing my teeth (_%22I feel good.%22_), were far easier than tasks which will benefit me in the long-run (_%22I feel like I should.%22_). Such tasks as working on my spiritual growth or giving time to develop software were _almost never_ completed. Thus during my last review I scheduled such tasks as %22Spiritual Growth%22 or %22Working Out%22 for every other day: time will only tell if this method proves more effective.%0A%0AOn the other hand, my %22Flossing%22 and %22Oil pulling%22-tasks where placed in my %22some day / maybe%22-folder. While thinking about all the important long-term tasks I was struggling with, I decided it would be better to set aside these health goals until I could comfortably say I was capable of performing the more important tasks.%0A%0AOne task that''s been particularly tricky is going to bed and waking up on time every day: I''d wake up late and decide that segmenting my sleep wasn''t a viable option and oversleep that night; or wake up, turn my alarm off, and go back to sleep. I decided to install the %5BI Can''t Wake Up! Alarm Clock%5D(https://play.google.com/store/apps/details?id=com.kog.alarmclock), _again_. Although I had used it before, because it is _literally the most annoying alarm ever_, I disabled everything. However, I have now enabled one puzzle each alarm to give me time to have to make a conscience decision to go to sleep or stay up.%0A%0AI found this book by Adrian Peter Schmidt, _%5BIllustrated Hints for Health and Strength for Busy People%5D(https://archive.org/details/illustratedhints00schm)_, which is fortunately available in the public domain for free because it was written in _1901_. Finding this book taught me a valuable lesson: while brain-dumping I twice created the task %22Research stretches%22 and both times I removed each task afterwards on the basis that I could save time by doing what I already knew. However, when in my reading I found the title of this book I had to grab it because _it was just what I was looking for_. The lesson here is that the brain knows what it wants, and I would have kept looking for exercise routines had I not found this book; _quit putting it off and decide to do it, or trash it for good_.%0A%0AAlthough my GTD reviews are scheduled for once a week, I''ve found that while I''m still brain-dumping the farthest reaches of my brain it happens much more frequently. There''s often ideas or projects which I''ve dumped in another format before, which are still occasionally on my mind, so I''m trying to compile them all into a single source. %5BTrello%5D(https://trello.com/) is a great tool for visual brain-dumping, which I love because I''m a very visual person.%0A%0AOn the same note of brain-dumping, I found that dumping all of my software ideas into a Trello and detailing them helped me to decide whether _I really wanted to finish them_ or _they needed to be trashed for good_: today I even finished a spreadsheet application I had been thinking about for a while (_%22Just do it!%22_), and found a very mature application which accomplished at-least everything I had wanted to develop into an application. My next plan is to prioritize these applications to help me focus.%0A%0AAll in all, although I didn''t do everything I _wanted_, the process has been good for me and I believe I''m doing better than before I started.%0A%0ABest regards.%0A
+');
+INSERT INTO post_revision (created_on, updated_on, id, post_id, diff) VALUES ('2016-12-16 02:47:32.337009+00', '2016-12-16 02:47:32.337037+00', 7, 5, '@@ -60,17 +60,19 @@
+ st_ two.
+-%0A
++%0D%0A%0D
+ %0AI''ve le
+@@ -108,17 +108,19 @@
+  though:
+-%0A
++%0D%0A%0D
+ %0A+ %5BTodo
+@@ -190,17 +190,19 @@
+ abitica.
+-%0A
++%0D%0A%0D
+ %0AWhile u
+@@ -707,17 +707,19 @@
+ orkflow.
+-%0A
++%0D%0A%0D
+ %0A+ **Dai
+@@ -818,17 +818,19 @@
+ its to_.
+-%0A
++%0D%0A%0D
+ %0AI found
+@@ -1299,17 +1299,19 @@
+ fective.
+-%0A
++%0D%0A%0D
+ %0AOn the 
+@@ -1628,17 +1628,19 @@
+ t tasks.
+-%0A
++%0D%0A%0D
+ %0AOne tas
+@@ -2249,17 +2249,19 @@
+ stay up.
+-%0A
++%0D%0A%0D
+ %0AI found
+@@ -3051,17 +3051,19 @@
+ r good_.
+-%0A
++%0D%0A%0D
+ %0AAlthoug
+@@ -3513,17 +3513,19 @@
+  person.
+-%0A
++%0D%0A%0D
+ %0AOn the 
+@@ -4024,17 +4024,19 @@
+ e focus.
+-%0A
++%0D%0A%0D
+ %0AAll in 
+@@ -4170,17 +4170,19 @@
+ started.
+-%0A
++%0D%0A%0D
+ %0ABest re
+@@ -4187,9 +4187,10 @@
+ regards.
++%0D
+ %0A
+');
+INSERT INTO post_revision (created_on, updated_on, id, post_id, diff) VALUES ('2016-12-16 02:47:57.96828+00', '2016-12-16 02:47:57.968306+00', 8, 5, '@@ -4187,10 +4187,8 @@
+ regards.
+-%0D%0A
+');
+
+
+--
+-- TOC entry 2194 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: post_revision_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('post_revision_id_seq', 8, true);
+
+
+--
+-- TOC entry 2172 (class 0 OID 16428)
+-- Dependencies: 190
+-- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO posts (created_on, updated_on, id, category_id, title, comments_enabled, is_published, preview_paragraphs, file_hash) VALUES ('2016-11-28 01:06:29.160848+00', '2016-11-28 01:06:29.160873+00', 1, 4, 'Hello world!', false, true, 2, NULL);
+INSERT INTO posts (created_on, updated_on, id, category_id, title, comments_enabled, is_published, preview_paragraphs, file_hash) VALUES ('2016-11-28 01:06:55.345901+00', '2016-11-28 01:06:55.345928+00', 2, 4, 'Lorem ipsum', false, true, 3, NULL);
+INSERT INTO posts (created_on, updated_on, id, category_id, title, comments_enabled, is_published, preview_paragraphs, file_hash) VALUES ('2016-11-28 01:10:20.138081+00', '2016-11-28 01:10:38.459535+00', 3, 5, 'youtube-dl', true, true, 4, NULL);
+INSERT INTO posts (created_on, updated_on, id, category_id, title, comments_enabled, is_published, preview_paragraphs, file_hash) VALUES ('2016-11-28 01:11:42.685688+00', '2016-11-28 01:12:07.888887+00', 4, 6, 'Week 0: The Beginning and The End', true, true, 3, NULL);
+INSERT INTO posts (created_on, updated_on, id, category_id, title, comments_enabled, is_published, preview_paragraphs, file_hash) VALUES ('2016-12-09 03:30:26.754597+00', '2016-12-11 01:50:53.267965+00', 5, 6, 'Week 1: Procrastination', true, true, 7, NULL);
+
+
+--
+-- TOC entry 2195 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('posts_id_seq', 5, true);
+
+
+--
+-- TOC entry 2166 (class 0 OID 16398)
+-- Dependencies: 184
+-- Data for Name: tag; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO tag (id, title) VALUES (1, 'Desktop');
+INSERT INTO tag (id, title) VALUES (2, 'Linux');
+INSERT INTO tag (id, title) VALUES (3, 'Weblog');
+INSERT INTO tag (id, title) VALUES (4, 'GTD');
+
+
+--
+-- TOC entry 2196 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tag_id_seq', 4, true);
+
+
+--
+-- TOC entry 2173 (class 0 OID 16442)
+-- Dependencies: 191
+-- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO tags (tag_id, post_id) VALUES (1, 3);
+INSERT INTO tags (tag_id, post_id) VALUES (2, 3);
+INSERT INTO tags (tag_id, post_id) VALUES (3, 1);
+INSERT INTO tags (tag_id, post_id) VALUES (3, 2);
+INSERT INTO tags (tag_id, post_id) VALUES (4, 5);
+
+
+--
+-- TOC entry 2038 (class 2606 OID 16414)
+-- Name: attributes attributes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY attributes
+    ADD CONSTRAINT attributes_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2034 (class 2606 OID 16395)
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2040 (class 2606 OID 16425)
+-- Name: pages_last_modified pages_last_modified_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pages_last_modified
+    ADD CONSTRAINT pages_last_modified_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2044 (class 2606 OID 16514)
+-- Name: post_revision post_revision_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY post_revision
+    ADD CONSTRAINT post_revision_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2042 (class 2606 OID 16436)
+-- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2036 (class 2606 OID 16403)
+-- Name: tag tag_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tag
+    ADD CONSTRAINT tag_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2048 (class 2606 OID 16515)
+-- Name: post_revision post_revision_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY post_revision
+    ADD CONSTRAINT post_revision_post_id_fkey FOREIGN KEY (post_id) REFERENCES posts(id);
+
+
+--
+-- TOC entry 2045 (class 2606 OID 16437)
+-- Name: posts posts_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY posts
+    ADD CONSTRAINT posts_category_id_fkey FOREIGN KEY (category_id) REFERENCES categories(id);
+
+
+--
+-- TOC entry 2047 (class 2606 OID 16450)
+-- Name: tags tags_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT tags_post_id_fkey FOREIGN KEY (post_id) REFERENCES posts(id);
+
+
+--
+-- TOC entry 2046 (class 2606 OID 16445)
+-- Name: tags tags_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT tags_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tag(id);
+
+
+--
+-- TOC entry 2183 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2016-12-22 20:06:39 EST
+
+--
+-- PostgreSQL database dump complete
+--
+
